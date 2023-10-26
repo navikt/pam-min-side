@@ -1,0 +1,44 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: pam-min-side
+  namespace: teampam
+  labels:
+    team: teampam
+spec:
+  image: {{ image }}
+  port: 8085
+  liveness:
+    path: /api/isAlive
+    initialDelay: 10
+  readiness:
+    path: /api/isReady
+    initialDelay: 10
+  replicas:
+    min: 2
+    max: 2
+  cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  vault:
+    enabled: false
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      level: Level3
+  tokenx:
+    enabled: true
+  prometheus:
+    enabled: true
+    path: /metrics
+  ingresses:
+    - {{ ingress }}
+  env:
+    - name: PORT
+      value: "8085"
