@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\""
+        "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|md|css)\""
     },
     "dependencies": {
         "@navikt/aksel-icons": "^5.7.6",
