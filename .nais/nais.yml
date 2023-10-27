@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teampam
 spec:
-  image: { { image } }
+  image: {{ image }}
   port: 8085
   liveness:
     path: /min-side/api/isAlive
