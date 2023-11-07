@@ -42,3 +42,11 @@ spec:
   env:
     - name: PORT
       value: "8085"
+    - name: PAM_ADUSER_URL
+      value: {{ pam_aduser_url }}
+    - name: PAM_ADUSER_AUDIENCE
+      value: {{ pam_aduser_audience }}
+  accessPolicy:
+    outbound:
+      rules:
+        - application: pam-aduser
