@@ -4,6 +4,8 @@ import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-reac
 import Link from "next/link";
 
 export default function MinSidePage() {
+    datastuff();
+
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
             <Heading level="1" size="xlarge" align="center" className="mb-1">
@@ -39,3 +41,21 @@ export default function MinSidePage() {
         </Box>
     );
 }
+
+function datastuff() {
+    getName().then(r =>  {
+        console.log("tull")
+    });
+}
+
+
+
+async function getName() {
+    const res = await fetch('/min-side/api/aduser/api/v1/personalia', {
+    //const res = await fetch('http://localhost:9017/aduser/api/v1/user', {
+        method: "GET",
+    })
+
+
+}
+
