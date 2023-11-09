@@ -21,7 +21,9 @@ export async function GET(request) {
 
     let redirectUrl = aduser_url + request.url.replace('http://localhost:3001/api', '')
 
-    const res = await fetch(redirectUrl, {
+    let aduserUrl = aduser_url + "/aduser/api/v1/personalia"
+
+    const res = await fetch(aduserUrl, {
         method: "GET",
         headers: requestHeaders
     });
