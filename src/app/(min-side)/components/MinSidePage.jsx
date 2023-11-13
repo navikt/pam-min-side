@@ -1,16 +1,14 @@
 "use client";
 
-import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-react";
+import { Box, Button, HStack, LinkPanel, VStack } from "@navikt/ds-react";
 import Link from "next/link";
+import Name from "@/app/(common)/components/NamePage";
 
 export default function MinSidePage() {
-    datastuff();
 
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
-            <Heading level="1" size="xlarge" align="center" className="mb-1">
-                Navn Navnesen
-            </Heading>
+            <Name></Name>
 
             <VStack align="center" className="mb-8">
                 <Button variant="tertiary" as={Link} href="/innstillinger">
@@ -42,20 +40,4 @@ export default function MinSidePage() {
     );
 }
 
-function datastuff() {
-    getName().then(r =>  {
-        console.log("tull")
-    });
-}
-
-
-
-async function getName() {
-    const res = await fetch('/min-side/api/aduser/api/v1/personalia', {
-    //const res = await fetch('http://localhost:9017/aduser/api/v1/user', {
-        method: "GET",
-    })
-
-
-}
 

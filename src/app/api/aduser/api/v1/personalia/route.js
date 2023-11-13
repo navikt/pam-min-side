@@ -19,8 +19,6 @@ export async function GET(request) {
     requestHeaders.set('authorization', `Bearer ${token}`);
     requestHeaders.set('content-type', 'application/json');
 
-    let redirectUrl = aduser_url + request.url.replace('http://localhost:3001/api', '')
-
     let aduserUrl = aduser_url + "/aduser/api/v1/personalia"
 
     const res = await fetch(aduserUrl, {
