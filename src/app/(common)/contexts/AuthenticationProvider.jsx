@@ -49,7 +49,6 @@ function AuthenticationProvider({ children }) {
                         setHasBeenLoggedIn(false);
                         timeoutLogout();
                     }
-                    login();
                 } else {
                     setAuthenticationStatus(AuthenticationStatus.FAILURE);
                 }

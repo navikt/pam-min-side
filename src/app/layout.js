@@ -8,6 +8,7 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "./globals.css";
 import App from "./App";
+import {ensureUserLoggedIn} from "@/app/(common)/utils/ensureUserLoggedIn";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -21,7 +22,9 @@ export const metadata = {
     },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    await ensureUserLoggedIn();
+
     return (
         <html lang="nb">
             <body data-theme="arbeidsplassen" className={inter.className}>

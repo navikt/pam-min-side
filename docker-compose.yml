@@ -12,7 +12,7 @@ services:
     environment:
       SERVER_PORT: 8233
       JSON_CONFIG: '{
-          "interactiveLogin": true,
+          "interactiveLogin": false,
           "httpServer": "NettyWrapper",
           "tokenCallbacks": [
             {
@@ -25,7 +25,7 @@ services:
                     "sub": "04010100653",
                     "pid": "04010100653",
                     "aud": [
-                              "local-token-x-client-id"
+                              "bogus"
                           ]
                   }
                 }
@@ -46,7 +46,7 @@ services:
       --log-level=info
       --bind-address=0.0.0.0:3000
       --ingress=http://localhost:3000/min-side
-      --openid.well-known-url=http://host.docker.internal:8233/default/.well-known/openid-configuration
+      --openid.well-known-url=http://host.docker.internal:8233/idporten/.well-known/openid-configuration
       --openid.client-id=bogus
       --openid.post-logout-redirect-uri=http://localhost:3000/
       --redis.address=redis:6379

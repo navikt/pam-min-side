@@ -1,15 +1,31 @@
 import {Issuer} from "openid-client";
 import logger from "@/app/(common)/utils/logger";
+import {createRemoteJWKSet, jwtVerify} from "jose";
 
 let issuer;
+let idPortenIssuer;
 let client;
+let remoteJWKSet;
 
-async function getClient(){
-   if(client) return client;
 
+async function getIssuer() {
     if(issuer == null) {
         issuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL);
     }
+    return issuer;
+}
+
+async function getIdPortenIssuer() {
+    if(idPortenIssuer == null) {
+        idPortenIssuer = await Issuer.discover(process.env.IDPORTEN_WELL_KNOWN_URL);
+    }
+    return idPortenIssuer;
+
+}
+async function getClient() {
+   if(client) return client;
+
+   let issuer = await getIssuer();
 
     client = await new issuer.Client(
         {
@@ -23,6 +39,32 @@ async function getClient(){
     )
 
     return client;
+}
+
+const getRemoteJWKSet = () => {
+    if(remoteJWKSet) {
+        return remoteJWKSet;
+    }
+
+    const jwksUrl = new URL(process.env.IDPORTEN_JWKS_URI);
+    remoteJWKSet = createRemoteJWKSet(jwksUrl);
+
+    return remoteJWKSet;
+};
+export async function isTokenValid(token) {
+    try {
+        const jwkSet = getRemoteJWKSet();
+        const idissuer = await getIdPortenIssuer();
+
+        const verification = await jwtVerify(token, jwkSet, {
+            audience: process.env.IDPORTEN_AUDIENCE,
+            issuer: idissuer.metadata.issuer,
+        });
+        return !!verification.payload;
+    } catch (e) {
+        logger.error(`Det skjedde en feil under validering av token, ${e.message}`);
+        return false;
+    }
 }
 
 export const grant = async (accessToken, tokenAudience) => {
