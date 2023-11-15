@@ -17,6 +17,4 @@ export async function ensureUserLoggedIn() {
         logger.error("Ugyldig token")
         redirect(`/oauth2/login?redirect=${encodeURIComponent('/min-side')}`)
     }
-
-    logger.info("Token er gyldig");
 }

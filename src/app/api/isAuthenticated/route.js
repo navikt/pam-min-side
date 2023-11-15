@@ -1,12 +1,14 @@
-import { validateIdportenToken } from "@navikt/next-auth-wonderwall";
 import logger from "@/app/(common)/utils/logger";
 import { headers } from 'next/headers'
+import {isTokenValid} from "@/app/(common)/utils/tokenUtils";
 
 export async function GET(request) {
+
     const bearerToken = headers().get('authorization')
     if (bearerToken) {
         try {
-            const validToken = await validateIdportenToken(bearerToken);
+            const token = bearerToken.replace('Bearer ', '');
+            const validToken = await isTokenValid(token);
             if (validToken) {
                 return new Response("OK", {
                     status: 200
