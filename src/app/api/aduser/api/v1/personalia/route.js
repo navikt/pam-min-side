@@ -26,6 +26,8 @@ export async function GET(request) {
         headers: requestHeaders
     });
 
+    logger.info(`Respons fra aduser: ${res.status}`)
+
     if(res.ok) {
         const data = await res.json();
         return Response.json(data);
