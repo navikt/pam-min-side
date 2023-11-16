@@ -29,6 +29,12 @@ export async function GET(request) {
     logger.info(`Respons fra aduser: ${res.status}`)
 
     if(res.ok) {
+        if(res.body === null) {
+            logger.info("Personalia er tom")
+            return new Response(res.body, {
+                status: res.status
+            })
+        }
         const data = await res.json();
         return Response.json(data);
     }
