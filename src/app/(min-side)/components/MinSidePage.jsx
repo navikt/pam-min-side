@@ -1,14 +1,14 @@
 "use client";
 
-import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-react";
+import { Box, Button, HStack, LinkPanel, VStack } from "@navikt/ds-react";
 import Link from "next/link";
+import Name from "@/app/(common)/components/NamePage";
 
 export default function MinSidePage() {
+
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
-            <Heading level="1" size="xlarge" align="center" className="mb-1">
-                Navn Navnesen
-            </Heading>
+            <Name></Name>
 
             <VStack align="center" className="mb-8">
                 <Button variant="tertiary" as={Link} href="/innstillinger">
@@ -39,3 +39,5 @@ export default function MinSidePage() {
         </Box>
     );
 }
+
+

@@ -1,29 +1,23 @@
 "use client";
 
-import React from "react";
-import PropTypes from "prop-types";
-import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
+import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
+import AuthenticationProvider from "@/app/(common)/contexts/AuthenticationProvider";
+import MinSideHeader from "@/app/(common)/components/MinSideHeader";
 
 function App({ children }) {
     return (
-        <div id="app">
-            <SkipLink href="#main-content" />
-            <div className="arb-push-footer-down">
-                <Header
-                    variant="person"
-                    authenticationStatus="is-authenticated"
-                    onLogin={() => {}}
-                    onLogout={() => {}}
-                />
-                <main id="main-content">{children}</main>
+        <AuthenticationProvider>
+            <div id="app">
+                <SkipLink href="#main-content"/>
+                <div className="arb-push-footer-down">
+                    <MinSideHeader/>
+                    <main id="main-content">{children}</main>
+                </div>
+                <Footer/>
             </div>
-            <Footer />
-        </div>
+        </AuthenticationProvider>
     );
 }
 
-App.propTypes = {
-    children: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
 
 export default App;
