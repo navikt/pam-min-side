@@ -25,7 +25,7 @@ services:
                     "sub": "04010100653",
                     "pid": "04010100653",
                     "aud": [
-                              "bogus"
+                              "local-token-x-client-id"
                           ]
                   }
                 }
@@ -47,7 +47,7 @@ services:
       --bind-address=0.0.0.0:3000
       --ingress=http://localhost:3000/min-side
       --openid.well-known-url=http://host.docker.internal:8233/idporten/.well-known/openid-configuration
-      --openid.client-id=bogus
+      --openid.client-id=local-token-x-client-id
       --openid.post-logout-redirect-uri=http://localhost:3000/
       --redis.address=redis:6379
       --redis.tls=false

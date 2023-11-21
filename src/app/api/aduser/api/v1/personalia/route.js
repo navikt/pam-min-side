@@ -26,16 +26,7 @@ export async function GET(request) {
         headers: requestHeaders
     });
 
-    //logger.info(`Respons fra aduser: ${res.status}`)
-    //logger.info(`Respons fra aduser er : ${res}`)
-
     if(res.ok) {
-        if(!res.body) {
-            logger.info("Personalia er tom")
-            return new Response(res.body, {
-                status: res.status
-            })
-        }
         const data = await res.json();
         return Response.json(data);
     }

@@ -1,36 +1,74 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+## Avhengigheter
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [pam-aduser](https://github.com/navikt/pam-aduser) 
+
+### Hvordan få tilgang til @navikt/arbeidsplassen-react og @navikt/arbeidsplassen-css
+
+Opprett fila `.npmrc` i hjemkatalogen din. F.eks. `~/.npmrc` Mer info: https://docs.npmjs.com/cli/v9/configuring-npm/npmrc
+
+Legg til følgende i fila
+
+```
+@navikt:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=$TOKEN
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opprett et token med "read:packages" rettigheter. [https://github.com/settings/tokens](https://github.com/settings/tokens) Bytt ut \$TOKEN med tokenet du akkurat opprettet. Velg Authorize token under "Configure SSO" for å gi tokenet tilgang til @navikt.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Ikke sjekk inn `.npmrc` til GitHub.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Mer informasjon om autentisering: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Kjøre lokalt 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Wonderwall tar seg av innlogging og legger på authorization-token på alle requester inn til appen. 
 
-## Deploy on Vercel
+```bash
+npm install
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Appen er avhengig av wonderwall og aduser som kan startes ved hjelp av docker-compose
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Frontenden kjører på port 3000: http://localhost:3000/min-side
+
+#### Docker Compose
+
+For å kjøre backend og wonderwall så trenger du å installere [Docker](https://docs.docker.com/engine/install/),
+og for å få tilgang til images må du ha [gcloud cli](https://cloud.google.com/sdk/docs/install) installert.
+
+For å kjøre Docker Compose lokalt, trenger du repot med fellestjenester.
+Hvis du ikke har det, klone det og legg i samma mappe som `pam-min-side`:
+
+```shell
+git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
+```
+
+##### Autentiser Docker repo
+
+Autentiser `gcloud`
+
+```shell
+gcloud auth login
+```
+
+Legg in Docker repo i credentials helper
+
+```shell
+gcloud auth configure-docker europe-north1-docker.pkg.dev
+```
+
+Hent token og logg inn i Docker
+
+```shell
+gcloud auth print-access-token \
+  | docker login \
+  -u oauth2accesstoken \
+  --password-stdin https://europe-north1-docker.pkg.dev
+```
+
