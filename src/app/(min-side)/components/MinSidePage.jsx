@@ -3,12 +3,14 @@
 import { Box, Button, HStack, LinkPanel, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import Name from "@/app/(common)/components/NamePage";
+import Samtykke from "@/app/(common)/components/Samtykke";
+import { useEffect } from "react";
 
 export default function MinSidePage() {
 
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
-            <Name></Name>
+            <Name />
 
             <VStack align="center" className="mb-8">
                 <Button variant="tertiary" as={Link} href="/innstillinger">
@@ -36,6 +38,8 @@ export default function MinSidePage() {
                     </LinkPanel.Description>
                 </LinkPanel>
             </VStack>
+
+            <Samtykke />
         </Box>
     );
 }
