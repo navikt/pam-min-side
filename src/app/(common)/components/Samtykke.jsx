@@ -7,7 +7,7 @@ export default function Samtykke() {
     const [navn, setNavn] = useState("Test");
     const [uuid, setUuid] = useState(null);
     const [harVerifisertEpost, setVerifisertEpost] = useState(null);
-    const [kallFeilet, setKallFeilet] = useState(null);
+    const [requestFeilet, setRequestFeilet] = useState(null);
 
     useEffect(() => {
         fetchSamtykke();
@@ -25,7 +25,7 @@ export default function Samtykke() {
         } else if (response.status === 404) {
             setHarSamtykket(false);
         } else {
-            setKallFeilet(`/GET ${response.status}`)
+            setRequestFeilet(`/GET ${response.status}`)
         }
     }
 
@@ -44,7 +44,7 @@ export default function Samtykke() {
             setHarSamtykket(true);
             setUuid(json.uuid);
         } else {
-            setKallFeilet(`/POST ${response.status}`)
+            setRequestFeilet(`/POST ${response.status}`)
         }
     }
 
@@ -56,7 +56,7 @@ export default function Samtykke() {
             setHarSamtykket(false);
             setUuid(null);
         } else {
-            setKallFeilet(`/DELETE ${response.status}`)
+            setRequestFeilet(`/DELETE ${response.status}`)
         }
     }
 
@@ -73,7 +73,7 @@ export default function Samtykke() {
         if (response.status === 200) {
             setHarSamtykket(true);
         } else {
-            setKallFeilet(`/PUT ${response.status}`)
+            setRequestFeilet(`/PUT ${response.status}`)
         }
     }
 
@@ -101,8 +101,8 @@ export default function Samtykke() {
                     <Button size="small" className="mt-4" onClick={() => postSamtykke(epost, navn)}>Jeg samtykker</Button>
                 </div>
             ) : ""}
-            {kallFeilet ? (
-                <div className="mt-4 navds-alert--error">Noe feilet! {kallFeilet}</div>
+            {requestFeilet ? (
+                <div className="mt-4 navds-alert--error">Noe feilet! {requestFeilet}</div>
                 ) : ""
             }
         </div>
