@@ -52,7 +52,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     const refreshToken = async (isCurrentlyLoggedIn) => {
         const response = await fetch(`/min-side/oauth2/session/refresh`, {
             method: "POST",
-            credentials: "include",
+            credentials: "same-origin",
             referrer: "/",
         });
         await handleSessionInfoResponse(response, isCurrentlyLoggedIn, "Det oppstod en feil ved refreshing av token");

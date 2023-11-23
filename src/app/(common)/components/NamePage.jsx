@@ -6,7 +6,9 @@ function Name() {
 
     useEffect(() => {
         async function fetchPersonalia() {
-            const response = await fetch("/min-side/api/aduser/api/v1/personalia")
+            const response = await fetch("/min-side/api/aduser/api/v1/personalia", {
+                credentials: "same-origin"
+            })
             if (response.status === 200) {
                 const json = await response.json();
                 setName(json?.navn);

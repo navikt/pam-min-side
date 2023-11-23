@@ -22,13 +22,16 @@ export async function GET(request) {
     let aduserUrl = aduser_url + "/aduser/api/v1/personalia"
 
     const res = await fetch(aduserUrl, {
+        credentials: "same-origin",
         method: "GET",
         headers: requestHeaders
     });
 
-    if(res.ok) {
+    if (res.ok) {
         const data = await res.json();
-        return Response.json(data);
+        return Response.json(data, {
+            headers: res.headers
+        });
     }
 
     return new Response(res.body, {
