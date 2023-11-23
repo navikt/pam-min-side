@@ -55,6 +55,7 @@ export default function Samtykke() {
         if (response.status === 200) {
             setHarSamtykket(false);
             setUuid(null);
+            setVerifisertEpost(null);
         } else {
             setRequestFeilet(`/DELETE ${response.status}`)
         }
