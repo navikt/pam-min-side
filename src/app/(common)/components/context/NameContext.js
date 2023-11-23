@@ -1,7 +1,10 @@
+"use client"
 import { useEffect, useState } from "react";
-import {Heading} from "@navikt/ds-react";
+import React from "react";
 
-function Name() {
+export const NameContext = React.createContext({});
+
+const NameProvider = ({children}) => {
     const [name, setName] = useState("");
 
     useEffect(() => {
@@ -18,10 +21,10 @@ function Name() {
     }, []);
 
     return (
-        <Heading level="1" size="xlarge" align="center" className="mb-1">
-            {name}
-        </Heading>
+        <NameContext.Provider value={name}>
+            {children}
+        </NameContext.Provider>
     )
 }
 
-export default Name;
+export default NameProvider;

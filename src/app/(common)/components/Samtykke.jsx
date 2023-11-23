@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Heading, HStack, TextField } from "@navikt/ds-react";
+import { NameContext } from "@/app/(common)/components/context/NameContext";
 
 export default function Samtykke() {
     const [harSamtykket, setHarSamtykket] = useState(null);
     const [epost, setEpost] = useState("");
-    const [navn, setNavn] = useState("Test");
     const [uuid, setUuid] = useState(null);
     const [harVerifisertEpost, setVerifisertEpost] = useState(null);
     const [requestFeilet, setRequestFeilet] = useState(null);
+    const navn = useContext(NameContext);
 
     useEffect(() => {
         fetchSamtykke();
@@ -20,7 +21,6 @@ export default function Samtykke() {
             setHarSamtykket(true);
             setEpost(json.email || "")
             setVerifisertEpost(json.verifiedEmail)
-            setNavn(json.name)
             setUuid(json.uuid)
         } else if (response.status === 404) {
             setHarSamtykket(false);

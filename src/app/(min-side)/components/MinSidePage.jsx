@@ -1,16 +1,19 @@
 "use client";
 
-import { Box, Button, HStack, LinkPanel, VStack } from "@navikt/ds-react";
+import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-react";
 import Link from "next/link";
-import Name from "@/app/(common)/components/NamePage";
 import Samtykke from "@/app/(common)/components/Samtykke";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { NameContext } from "@/app/(common)/components/context/NameContext";
 
 export default function MinSidePage() {
+    const navn = useContext(NameContext);
 
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
-            <Name />
+            <Heading level="1" size="xlarge" align="center" className="mb-1">
+                {navn}
+            </Heading>
 
             <VStack align="center" className="mb-8">
                 <Button variant="tertiary" as={Link} href="/innstillinger">
