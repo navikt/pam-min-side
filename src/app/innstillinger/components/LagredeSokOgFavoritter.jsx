@@ -23,7 +23,6 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
     const [bekreftSamtykke, setBekreftSamtykke] = useState(false);
     const [slettSamtykkeModal, setSlettSamtykkeModal] = useState(false);
 
-
     const onCloseSamtykkeModal = () => {
         setSamtykkeModal(false);
         setSamtykkeError(false);
