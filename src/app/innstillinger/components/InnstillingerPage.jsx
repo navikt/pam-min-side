@@ -51,7 +51,6 @@ export default function InnstillingerPage() {
             <Heading level="1" size="xlarge" align="center" className="mb-16">
                 Samtykker og innstillinger
             </Heading>
-
             <VStack align="left" className="mb-8">
                 <LagredeSokOgFavoritter
                     harSamtykket={harSamtykket}
