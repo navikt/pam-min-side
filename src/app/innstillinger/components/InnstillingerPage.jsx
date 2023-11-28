@@ -1,26 +1,12 @@
 "use client";
 
 import {
-    Alert,
-    ConfirmationPanel,
-    ExpansionCard,
-    Modal,
-    TextField,
-    Tag,
-    BodyLong,
     Box,
-    Button,
     Heading,
-    HStack,
     VStack,
-    LinkPanel,
-    Link as DsLink
+    LinkPanel
 } from "@navikt/ds-react";
-import {PlusCircleIcon} from "@navikt/aksel-icons";
 import {useEffect, useState} from "react";
-import ValidateEmail from "@/app/(common)/components/ValidateEmail";
-import NextLink from "next/link";
-import Samtykketekst from "@/app/innstillinger/components/Samtykketekst";
 import LagredeSokOgFavoritter from "@/app/innstillinger/components/LagredeSokOgFavoritter";
 import Epost from "@/app/innstillinger/components/Epost";
 
@@ -33,13 +19,7 @@ export default function InnstillingerPage() {
     const [uuid, setUuid] = useState(null);
     const [harVerifisertEpost, setVerifisertEpost] = useState(null);
     const [requestFeilet, setRequestFeilet] = useState(null);
-    const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
-    const [isEpostVerified, setIsEpostVerified] = useState(false);
-    const [isEndreEpost, setIsEndreEpost] = useState(false);
     const [lagretEpost, setLagretEpost] = useState("");
-    const [slettEpostModal, setSlettEpostModal] = useState(false);
-    const [endreEpost, setEndreEpost] = useState(false);
-    const [name, setName] = useState("");
 
     useEffect(() => {
         fetchSamtykke();
@@ -66,24 +46,6 @@ export default function InnstillingerPage() {
         }
     }
 
-    const onEpostChange = (e) => {
-        setEpost(e.target.value);
-    }
-
-    const onAvbrytEpost = () => {
-        setEpost(lagretEpost);
-
-        if (lagretEpost !== "") {
-            setIsEndreEpost(false);
-        } else {
-            setIsLagreEpostPanel(false);
-        }
-    };
-
-    const sendNyBekreftelse = () => {
-        //TODO: Send ny bekreftelse på e-post
-    };
-
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-small">
             <Heading level="1" size="xlarge" align="center" className="mb-16">
@@ -95,12 +57,13 @@ export default function InnstillingerPage() {
                     harSamtykket={harSamtykket}
                     setHarSamtykket={setHarSamtykket}
                     epost={epost}
+                    setEpost={setEpost}
                     navn={navn}
                     setUuid={setUuid}
                     setVerifisertEpost={setVerifisertEpost}
                     setRequestFeilet={setRequestFeilet}
+                    setLagretEpost={setLagretEpost}
                 />
-
                 <Epost
                     response={response}
                     harSamtykket={harSamtykket}

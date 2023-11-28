@@ -10,11 +10,11 @@ import {
     Tag,
     VStack
 } from "@navikt/ds-react";
-
+import {FileTextIcon, CheckmarkCircleIcon} from "@navikt/aksel-icons";
 import Samtykketekst from "@/app/innstillinger/components/Samtykketekst";
 import {useState} from "react";
 
-export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setRequestFeilet }) {
+export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setRequestFeilet, setLagretEpost}) {
 
     const [samtykkeModal, setSamtykkeModal] = useState(false);
     const [visSamtykketekst, setVisSamtykketekst] = useState(false);
@@ -26,6 +26,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
     const onCloseSamtykkeModal = () => {
         setSamtykkeModal(false);
         setSamtykkeError(false);
+        setBekreftSamtykke(false);
     };
 
     async function onSamtykke(epost, navn){
@@ -43,13 +44,11 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                 const json = await response.json();
                 setHarSamtykket(true);
                 setUuid(json.uuid);
+                setSamtykkeModal(false);
+                setSamtykkeError(false);
             } else {
                 setRequestFeilet(`/POST ${response.status}`)
             }
-
-            //TODO: set samtykket
-            setSamtykkeModal(false);
-            setSamtykkeError(false);
         } else {
             setSamtykkeError(true);
         }
@@ -63,22 +62,17 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
             setHarSamtykket(false);
             setUuid(null);
             setVerifisertEpost(null);
+            setEpost(null);
+            setLagretEpost(null);
+            setSlettSamtykkeModal(false);
+            setBekreftSamtykke(false);
         } else {
             setRequestFeilet(`/DELETE ${response.status}`)
         }
-
-        //TODO: Slett samtykke
-        setSlettSamtykkeModal(false);
-        setBekreftSamtykke(false);
     }
 
     const onExpandedChange = (newExpanded) => {
         setExpanded(newExpanded);
-    };
-
-    const onBekreftSamtykkeChange = (newBekreftExpanded) => {
-        debugger;
-        setBekreftSamtykke(newBekreftExpanded);
     };
 
     return (
@@ -106,7 +100,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                     </BodyLong>
                 </li>
             </ul>
-            <HStack gap="4" align="center" className="mb-6">
+            <HStack gap="4" align="center" className="mb-4">
                 { harSamtykket ? (
                     <Tag variant="success-moderate">Du har samtykket</Tag>
                 ) : (
@@ -114,6 +108,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                 )}
                 {harSamtykket ? (
                     <Button
+                        size="small"
                         variant="tertiary"
                         onClick={() => setSlettSamtykkeModal(true)}
                         id="slett-samtykke"
@@ -122,17 +117,21 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                     </Button>
                 ) : (
                     <Button
+                        size="small"
                         variant="tertiary"
                         onClick={() => setSamtykkeModal(true)}
                         id="gi-samtykke"
+                        icon={<CheckmarkCircleIcon aria-hidden="true" fontSize="1.25rem" />}
                     >
                         Gi samtykke
                     </Button>
                 )}
                 <Button
+                    size="small"
                     variant="tertiary"
                     onClick={() => setVisSamtykketekst(true)}
                     id="vis-samtykke"
+                    icon={<FileTextIcon aria-hidden="true" fontSize="1.25rem" />}
                 >
                     Vis samtykketekst
                 </Button>
@@ -152,6 +151,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
+                            size="small"
                             variant="secondary"
                             onClick={() => setVisSamtykketekst(false)}
                             id="confirmationPopup--avbryt"
@@ -160,7 +160,6 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
                 <Modal
                     open={samtykkeModal}
                     aria-label="Tilbakemelding"
@@ -201,11 +200,11 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                             error={samtykkeError && "Du må samtykke før du kan fortsette."}
                         >
                         </ConfirmationPanel>
-
                     </Modal.Body>
                     <Modal.Footer>
                         <HStack gap="4">
                             <Button
+                                size="small"
                                 variant="secondary"
                                 onClick={onCloseSamtykkeModal}
                                 id="avbryt-lagrede-søk-og-favoritter"
@@ -213,6 +212,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                                 Avbryt
                             </Button>
                             <Button
+                                size="small"
                                 variant="primary"
                                 onClick={() => onSamtykke(epost, navn)}
                                 id="lagrede-søk-og-favoritter"
@@ -224,7 +224,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                 </Modal>
             </HStack>
             { harSamtykket && slettSamtykkeModal && (
-                <Box padding="6" background="surface-alt-2-subtle" borderRadius="large">
+                <Box padding="6" background="surface-alt-2-subtle" borderRadius="large" className="mb-4">
                     <Heading level="4" size="small" align="left" className="mb-2">
                         Bekreft at du ønsker å slette samtykket for lagrede søk og favoritter
                     </Heading>
@@ -235,6 +235,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                     <VStack align="end">
                         <HStack gap="4">
                             <Button
+                                size="small"
                                 variant="secondary"
                                 id="avbryt-slett-samtykke"
                                 onClick={() => setSlettSamtykkeModal(false)}
@@ -242,6 +243,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, navn, setH
                                 Avbryt
                             </Button>
                             <Button
+                                size="small"
                                 variant="primary"
                                 id="slett-samtykke"
                                 onClick={() => onSlettSamtykke()}
