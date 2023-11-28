@@ -10,7 +10,7 @@ import {
     Tag,
     VStack
 } from "@navikt/ds-react";
-import {FileTextIcon, CheckmarkCircleIcon} from "@navikt/aksel-icons";
+import {FileTextIcon, CheckmarkCircleIcon, TrashIcon} from "@navikt/aksel-icons";
 import Samtykketekst from "@/app/innstillinger/components/Samtykketekst";
 import {useState} from "react";
 
@@ -112,6 +112,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         variant="tertiary"
                         onClick={() => setSlettSamtykkeModal(true)}
                         id="slett-samtykke"
+                        icon={<TrashIcon aria-hidden="true" fontSize="1.25rem" />}
                     >
                         Slett samtykke
                     </Button>

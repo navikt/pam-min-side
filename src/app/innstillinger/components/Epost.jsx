@@ -1,5 +1,5 @@
 import {Alert, BodyLong, Box, Button, Heading, HStack, Link as DsLink, TextField, VStack} from "@navikt/ds-react";
-import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon} from "@navikt/aksel-icons";
+import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon} from "@navikt/aksel-icons";
 import NextLink from "next/link";
 import {useState} from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
@@ -214,6 +214,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     variant="tertiary"
                                     id="send-ny-bekreftelse-epost"
                                     onClick={() => sendNyBekreftelse() }
+                                    icon={<EnvelopeClosedIcon aria-hidden="true" fontSize="1.25rem" />}
                                 >
                                     Send ny bekreftelse på e-post
                                 </Button>
