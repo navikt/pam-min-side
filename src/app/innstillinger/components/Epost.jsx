@@ -3,6 +3,7 @@ import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIco
 import NextLink from "next/link";
 import {useState} from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
+import {ARBEIDSPLASSEN_URL} from "@/app/(common)/utils/constants";
 
 export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost }) {
 
@@ -89,7 +90,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                     <BodyLong className="mb-4">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
-                        <NextLink href="http://localhost:3000/stillinger/lagrede-sok" passHref legacyBehavior>
+                        <NextLink href={`${ARBEIDSPLASSEN_URL}/stillinger/lagrede-sok`} passHref legacyBehavior>
                             <DsLink>dine lagrede søk.</DsLink>
                         </NextLink>
                     </BodyLong>
