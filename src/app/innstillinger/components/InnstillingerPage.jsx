@@ -4,7 +4,7 @@ import {
     Box,
     Heading,
     VStack,
-    LinkPanel
+    LinkPanel, Alert, BodyLong
 } from "@navikt/ds-react";
 import {useEffect, useState} from "react";
 import LagredeSokOgFavoritter from "@/app/innstillinger/components/LagredeSokOgFavoritter";
@@ -18,8 +18,8 @@ export default function InnstillingerPage() {
     const [epost, setEpost] = useState("");
     const [uuid, setUuid] = useState(null);
     const [harVerifisertEpost, setVerifisertEpost] = useState(null);
-    const [requestFeilet, setRequestFeilet] = useState(null);
     const [lagretEpost, setLagretEpost] = useState("");
+    const [requestFeilet, setRequestFeilet] = useState(false);
 
     useEffect(() => {
         fetchSamtykke();
@@ -42,15 +42,26 @@ export default function InnstillingerPage() {
         } else if (response.status === 404) {
             setHarSamtykket(false);
         } else {
-            setRequestFeilet(`/GET ${response.status}`)
+            setRequestFeilet(true)
         }
     }
 
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-small">
+            {requestFeilet && (
+                <Alert variant="error" className="mb-4">
+                    <Heading level="5" size="xsmall" align="left" className="mb-2">
+                        Kunne ikke hente samtykke
+                    </Heading>
+                    <BodyLong className="mb-3">
+                        Venligst prøv igjen senere.
+                    </BodyLong>
+                </Alert>
+            )}
             <Heading level="1" size="xlarge" align="center" className="mb-16">
                 Samtykker og innstillinger
             </Heading>
+
             <VStack align="left" className="mb-8">
                 <LagredeSokOgFavoritter
                     harSamtykket={harSamtykket}
@@ -60,7 +71,6 @@ export default function InnstillingerPage() {
                     navn={navn}
                     setUuid={setUuid}
                     setVerifisertEpost={setVerifisertEpost}
-                    setRequestFeilet={setRequestFeilet}
                     setLagretEpost={setLagretEpost}
                 />
                 <Epost

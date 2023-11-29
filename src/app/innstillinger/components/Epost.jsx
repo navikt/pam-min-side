@@ -11,6 +11,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
     const [isEpostError, setIsEpostError] = useState(false);
     const [slettEpostModal, setSlettEpostModal] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
+    const [requestFeilet, setRequestFeilet] = useState(false);
 
     async function lagreEpost(){
         if (!epost || !ValidateEmail(epost)) {
@@ -30,8 +31,9 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                 setHarSamtykket(true);
                 setLagretEpost(epost);
                 setVerifiseringspostSendt(false);
+                setRequestFeilet(false);
             } else {
-                setRequestFeilet(`/PUT ${response.status}`)
+                setRequestFeilet(true)
             }
             setIsEpostError(false);
         }
@@ -41,6 +43,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
         setIsLagreEpostPanel(false)
         setEpost(lagretEpost);
         setIsEpostError(false);
+        setRequestFeilet(false);
     }
 
     async function slettEpost(epost, navn, uuid) {
@@ -60,9 +63,10 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
             setLagretEpost(null);
             setSlettEpostModal(false);
             setIsLagreEpostPanel(false);
-            setVerifiseringspostSendt(false)
+            setVerifiseringspostSendt(false);
+            setRequestFeilet(false);
         } else {
-            setRequestFeilet(`/PUT ${response.status}`)
+            setRequestFeilet(true)
         }
     }
 
@@ -72,8 +76,9 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
         })
         if (response.status === 200) {
             setVerifiseringspostSendt(true);
+            setRequestFeilet(false);
         } else {
-            setRequestFeiletTekst(`/PUT ${response.status}`)
+            setRequestFeilet(true);
         }
     }
 
@@ -244,6 +249,16 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         </>
                     )}
                 </>
+            )}
+            {requestFeilet && (
+                <Alert variant="error" className="mb-4 mt-2">
+                    <Heading level="5" size="xsmall" align="left" className="mb-2">
+                        Kunne ikke lagre epost / sende ut ny bekreftelse
+                    </Heading>
+                    <BodyLong className="mb-3">
+                        Venligst prøv igjen senere.
+                    </BodyLong>
+                </Alert>
             )}
         </>
     )

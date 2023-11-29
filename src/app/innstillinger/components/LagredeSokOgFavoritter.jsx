@@ -1,4 +1,5 @@
 import {
+    Alert,
     BodyLong,
     Box,
     Button,
@@ -14,7 +15,7 @@ import {FileTextIcon, CheckmarkCircleIcon, TrashIcon} from "@navikt/aksel-icons"
 import Samtykketekst from "@/app/innstillinger/components/Samtykketekst";
 import {useState} from "react";
 
-export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setRequestFeilet, setLagretEpost}) {
+export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setLagretEpost}) {
 
     const [samtykkeModal, setSamtykkeModal] = useState(false);
     const [visSamtykketekst, setVisSamtykketekst] = useState(false);
@@ -22,11 +23,13 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
     const [expanded, setExpanded] = useState(false);
     const [bekreftSamtykke, setBekreftSamtykke] = useState(false);
     const [slettSamtykkeModal, setSlettSamtykkeModal] = useState(false);
+    const [requestFeilet, setRequestFeilet] = useState(false);
 
     const onCloseSamtykkeModal = () => {
         setSamtykkeModal(false);
         setSamtykkeError(false);
         setBekreftSamtykke(false);
+        setRequestFeilet(false);
     };
 
     async function onSamtykke(epost, navn){
@@ -46,8 +49,9 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                 setUuid(json.uuid);
                 setSamtykkeModal(false);
                 setSamtykkeError(false);
+                setRequestFeilet(false)
             } else {
-                setRequestFeilet(`/POST ${response.status}`)
+                setRequestFeilet(true)
             }
         } else {
             setSamtykkeError(true);
@@ -67,7 +71,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
             setSlettSamtykkeModal(false);
             setBekreftSamtykke(false);
         } else {
-            setRequestFeilet(`/DELETE ${response.status}`)
+            setRequestFeilet(true)
         }
     }
 
@@ -202,6 +206,16 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                             error={samtykkeError && "Du må samtykke før du kan fortsette."}
                         >
                         </ConfirmationPanel>
+                        {requestFeilet && (
+                            <Alert variant="error" className="mt-4">
+                                <Heading level="5" size="xsmall" align="left" className="mb-2">
+                                    Noe gikk galt
+                                </Heading>
+                                <BodyLong className="mb-3">
+                                    Kunne ikke lagre samtykke. Prøv igjen senere.
+                                </BodyLong>
+                            </Alert>
+                        )}
                     </Modal.Body>
                     <Modal.Footer>
                         <HStack gap="4">
@@ -255,6 +269,16 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         </HStack>
                     </VStack>
                 </Box>
+            )}
+            {requestFeilet && harSamtykket && (
+                <Alert variant="error" className="mb-4">
+                    <Heading level="5" size="xsmall" align="left" className="mb-2">
+                        Kunne ikke slette samtykke
+                    </Heading>
+                    <BodyLong className="mb-3">
+                        Venligst prøv igjen senere.
+                    </BodyLong>
+                </Alert>
             )}
         </>
     );
