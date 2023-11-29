@@ -68,6 +68,12 @@ export async function isTokenValid(token) {
 }
 
 export const grant = async (accessToken, tokenAudience) => {
+    const validToken = await isTokenValid(accessToken);
+
+    if(!validToken) {
+        return "";
+    }
+
     let tokenSet;
     client = await getClient();
 
@@ -99,6 +105,7 @@ export const grant = async (accessToken, tokenAudience) => {
             }
 
         logger.error(`Kunne ikke veksle inn token: ${error.message}`);
+        return "";
     }
 
     return tokenSet.access_token;

@@ -1,4 +1,3 @@
-import logger from "@/app/(common)/utils/logger";
 import {grant} from "@/app/(common)/utils/tokenUtils";
 
 const aduserUrl = process.env.PAM_ADUSER_URL || 'http://localhost:9017';
@@ -83,12 +82,14 @@ async function exchangeToken(request) {
     const idportenToken = request.headers.get('authorization');
 
     const replacedToken = idportenToken.replace('Bearer ', '');
-    try {
-        return await grant(replacedToken, audience);
-    } catch (e) {
-        logger.error(`feil ved veksling til tokenx: ${e.message}`)
+    const token = await grant(replacedToken, audience);
+
+    if(token === "") {
+        return new Response("Det har skjedd en feil ved utveksling av token", {
+            status: 401
+        })
     }
-    return "";
+    return token;
 }
 
 function createAuthorizationAndContentTypeHeaders(token, csrf) {

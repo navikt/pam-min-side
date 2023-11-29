@@ -6,8 +6,6 @@ export async function ensureUserLoggedIn() {
     const requestHeaders = headers();
     const bearerToken = requestHeaders.get('authorization');
 
-    //TODO En eller annen måte å passe på at man ikke havner i en redirect-loop hvis det er noe feil med wonderwall. Gi feilside?
-
     if(!bearerToken) {
         redirect(`/oauth2/login?redirect=${encodeURIComponent('/min-side')}`)
     }

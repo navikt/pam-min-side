@@ -1,4 +1,3 @@
-import logger from "@/app/(common)/utils/logger";
 import {grant} from "@/app/(common)/utils/tokenUtils";
 
 export async function GET(request) {
@@ -7,12 +6,12 @@ export async function GET(request) {
     const idportenToken = request.headers.get('authorization');
 
     const replacedToken = idportenToken.replace('Bearer ', '');
-    let token;
+    const token = await grant(replacedToken, audience);
 
-    try {
-        token = await grant(replacedToken, audience);
-    } catch (e) {
-        logger.error(`feil ved veksling til tokenx: ${e.message}`)
+    if(token === "") {
+        return new Response("Det har skjedd en feil ved utveksling av token", {
+            status: 401
+        })
     }
 
     const requestHeaders = new Headers(request.headers);
