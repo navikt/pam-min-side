@@ -3,9 +3,9 @@ import {
     exchangeToken,
     grant
 } from "@/app/(common)/utils/tokenUtils";
+import { ADUSER_URL } from "@/app/(common)/utils/constants";
 
-const aduserUrl = process.env.PAM_ADUSER_URL || 'http://localhost:9017';
-export const userUrl = aduserUrl + "/aduser/api/v1/user"
+export const userUrl = `${ADUSER_URL}/aduser/api/v1/user`
 
 export async function GET(request) {
     const token = await exchangeToken(request);

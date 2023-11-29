@@ -1,8 +1,8 @@
 import logger from "@/app/(common)/utils/logger";
 import {grant} from "@/app/(common)/utils/tokenUtils";
+import { ADUSER_URL } from "@/app/(common)/utils/constants";
 
 export async function GET(request) {
-    const aduser_url = process.env.PAM_ADUSER_URL || 'http://localhost:9017';
     const audience = process.env.PAM_ADUSER_AUDIENCE;
     const idportenToken = request.headers.get('authorization');
 
@@ -19,7 +19,7 @@ export async function GET(request) {
     requestHeaders.set('authorization', `Bearer ${token}`);
     requestHeaders.set('content-type', 'application/json');
 
-    let aduserUrl = aduser_url + "/aduser/api/v1/personalia"
+    let aduserUrl = `${ADUSER_URL}/aduser/api/v1/personalia`
 
     const res = await fetch(aduserUrl, {
         credentials: "same-origin",
