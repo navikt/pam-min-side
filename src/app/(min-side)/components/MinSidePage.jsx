@@ -2,7 +2,6 @@
 
 import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-react";
 import Link from "next/link";
-import Samtykke from "@/app/(common)/components/Samtykke";
 import { useContext } from "react";
 import { NameContext } from "@/app/(common)/components/context/NameContext";
 
@@ -41,8 +40,6 @@ export default function MinSidePage() {
                     </LinkPanel.Description>
                 </LinkPanel>
             </VStack>
-
-            <Samtykke />
         </Box>
     );
 }
