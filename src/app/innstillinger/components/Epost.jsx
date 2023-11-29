@@ -32,7 +32,6 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
             } else {
                 setRequestFeilet(`/PUT ${response.status}`)
             }
-
             setIsEpostError(false);
         }
     }
