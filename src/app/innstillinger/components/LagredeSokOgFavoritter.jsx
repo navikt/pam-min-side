@@ -141,6 +141,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                     aria-label="Tilbakemelding"
                     onClose={() => setVisSamtykketekst(false)}
                     width="medium"
+                    closeOnBackdropClick
                 >
                     <Modal.Header closeButton={true}>
                         <Heading level="2" size="large">

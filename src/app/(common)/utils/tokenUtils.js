@@ -7,6 +7,7 @@ let idPortenIssuer;
 let client;
 let remoteJWKSet;
 
+export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
 async function getIssuer() {
     if(issuer == null) {
@@ -109,3 +110,27 @@ const createOidcUnknownError = (err) =>
      Feilmelding fra openid-client: (${err}). 
      HTTP Status fra TokenX: (${err.response?.statusCode} ${err.response?.statusMessage})
      Body fra TokenX: ${JSON.stringify(err.response?.body)}`
+
+export async function exchangeToken(request) {
+    const audience = process.env.PAM_ADUSER_AUDIENCE;
+    const idportenToken = request.headers.get('authorization');
+
+    const replacedToken = idportenToken.replace('Bearer ', '');
+    try {
+        return await grant(replacedToken, audience);
+    } catch (e) {
+        logger.error(`feil ved veksling til tokenx: ${e.message}`)
+    }
+    return "";
+}
+
+export function createAuthorizationAndContentTypeHeaders(token, csrf) {
+    const requestHeaders= new Headers()
+    requestHeaders.set('authorization', `Bearer ${token}`);
+    requestHeaders.set('content-type', 'application/json');
+    if (csrf) {
+        requestHeaders.set('cookie', `${CSRF_COOKIE_NAME}=${csrf}`)
+        requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);
+    }
+    return requestHeaders;
+}

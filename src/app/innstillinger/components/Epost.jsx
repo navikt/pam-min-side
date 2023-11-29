@@ -9,6 +9,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
     const [slettEpostModal, setSlettEpostModal] = useState(false);
+    const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
 
     async function lagreEpost(){
         if (!epost || !ValidateEmail(epost)) {
@@ -27,6 +28,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                 setIsLagreEpostPanel(false);
                 setHarSamtykket(true);
                 setLagretEpost(epost);
+                setVerifiseringspostSendt(false);
             } else {
                 setRequestFeilet(`/PUT ${response.status}`)
             }
@@ -58,13 +60,21 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
             setLagretEpost(null);
             setSlettEpostModal(false);
             setIsLagreEpostPanel(false);
+            setVerifiseringspostSendt(false)
         } else {
             setRequestFeilet(`/PUT ${response.status}`)
         }
     }
 
-    function sendNyBekreftelse() {
-        //TODO: Send ny bekreftelse på e-post
+    async function sendNyBekreftelse() {
+        const response = await fetch("/min-side/api/aduser/api/v1/resendverificationemail", {
+            method: "PUT"
+        })
+        if (response.status === 200) {
+            setVerifiseringspostSendt(true);
+        } else {
+            setRequestFeiletTekst(`/PUT ${response.status}`)
+        }
     }
 
     return (
@@ -102,7 +112,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             <HStack gap="2">
                                 {!isLagreEpostPanel &&(
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="23" viewBox="0 0 18 18" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1.6875C7.03249 1.6875 5.4375 3.28249 5.4375 5.25V6.9375H5.25C4.52513 6.9375 3.9375 7.52513 3.9375 8.25V15C3.9375 15.3107 4.18934 15.5625 4.5 15.5625H13.5C13.8107 15.5625 14.0625 15.3107 14.0625 15V8.25C14.0625 7.52513 13.4749 6.9375 12.75 6.9375H12.5625V5.25C12.5625 3.28249 10.9675 1.6875 9 1.6875ZM11.4375 6.9375V5.25C11.4375 3.90381 10.3462 2.8125 9 2.8125C7.65381 2.8125 6.5625 3.90381 6.5625 5.25V6.9375H11.4375ZM9 9.75C8.37868 9.75 7.875 10.2537 7.875 10.875C7.875 11.2914 8.10124 11.655 8.4375 11.8495V12.75C8.4375 13.0607 8.68934 13.3125 9 13.3125C9.31066 13.3125 9.5625 13.0607 9.5625 12.75V11.8495C9.89876 11.655 10.125 11.2914 10.125 10.875C10.125 10.2537 9.62132 9.75 9 9.75Z" fill="#003141"/>
+                                        <path fillRule="evenodd" clipRule="evenodd" d="M9 1.6875C7.03249 1.6875 5.4375 3.28249 5.4375 5.25V6.9375H5.25C4.52513 6.9375 3.9375 7.52513 3.9375 8.25V15C3.9375 15.3107 4.18934 15.5625 4.5 15.5625H13.5C13.8107 15.5625 14.0625 15.3107 14.0625 15V8.25C14.0625 7.52513 13.4749 6.9375 12.75 6.9375H12.5625V5.25C12.5625 3.28249 10.9675 1.6875 9 1.6875ZM11.4375 6.9375V5.25C11.4375 3.90381 10.3462 2.8125 9 2.8125C7.65381 2.8125 6.5625 3.90381 6.5625 5.25V6.9375H11.4375ZM9 9.75C8.37868 9.75 7.875 10.2537 7.875 10.875C7.875 11.2914 8.10124 11.655 8.4375 11.8495V12.75C8.4375 13.0607 8.68934 13.3125 9 13.3125C9.31066 13.3125 9.5625 13.0607 9.5625 12.75V11.8495C9.89876 11.655 10.125 11.2914 10.125 10.875C10.125 10.2537 9.62132 9.75 9 9.75Z" fill="#003141"/>
                                     </svg>
                                 )}
                                 <Heading level="5" size="xsmall" align="left">
@@ -115,7 +125,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                 id="epost-adresse"
                                 label=""
                                 type="email"
-                                value={epost}
+                                value={epost || ""}
                                 onChange={(e) => setEpost(e.target.value)}
                                 error={isEpostError && "E-postadressen er ugyldig, kontroller at du ikke savner noen tegn"}
                             />
@@ -208,6 +218,18 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     bekreftelsen kan du sende en ny.
                                 </BodyLong>
                             </Alert>
+                            {verifiseringspostSendt && (
+                                <>
+                                    <Alert variant="info">
+                                        <Heading level="5" size="xsmall" align="left" className="mb-2">
+                                            En ny verifiseringsmail er sendt til {epost}
+                                        </Heading>
+                                        <BodyLong className="mb-3">
+                                            Når du har bekreftet e-postadressen din vil du kunne motta nye treff i lagrede søk.
+                                        </BodyLong>
+                                    </Alert>
+                                </>
+                            )}
                             <HStack align="start">
                                 <Button
                                     size="small"
