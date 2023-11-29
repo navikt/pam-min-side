@@ -46,6 +46,8 @@ spec:
       value: {{ pam_aduser_url }}
     - name: PAM_ADUSER_AUDIENCE
       value: {{ pam_aduser_audience }}
+    - name: NEXT_PUBLIC_ARBEIDSPLASSEN_URL
+      value: {{ arbeidsplassen_url }}
   accessPolicy:
     outbound:
       rules:

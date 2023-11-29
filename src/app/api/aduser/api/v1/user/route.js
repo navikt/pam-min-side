@@ -1,8 +1,10 @@
-import {grant} from "@/app/(common)/utils/tokenUtils";
+import {
+    createAuthorizationAndContentTypeHeaders, CSRF_COOKIE_NAME,
+    exchangeToken,
+} from "@/app/(common)/utils/tokenUtils";
+import { ADUSER_URL } from "@/app/(common)/utils/constants";
 
-const aduserUrl = process.env.PAM_ADUSER_URL || 'http://localhost:9017';
-const userUrl = aduserUrl + "/aduser/api/v1/user"
-const csrfCookieName = "XSRF-TOKEN-ARBEIDSPLASSEN"
+export const userUrl = `${ADUSER_URL}/aduser/api/v1/user`
 
 export async function GET(request) {
     const token = await exchangeToken(request);
@@ -25,7 +27,7 @@ export async function POST(request) {
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "POST",
-        headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(csrfCookieName)?.value),
+        headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
         body: request.body,
         credentials: "same-origin",
         duplex: "half",
@@ -45,7 +47,7 @@ export async function PUT(request) {
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "PUT",
-        headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(csrfCookieName)?.value),
+        headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
         body: request.body,
         credentials: "same-origin",
         duplex: "half",
@@ -65,7 +67,7 @@ export async function DELETE(request) {
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "DELETE",
-        headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(csrfCookieName)?.value),
+        headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
     });
 
     if (!res.ok) {
@@ -77,28 +79,3 @@ export async function DELETE(request) {
     return Response.json("{}")
 }
 
-async function exchangeToken(request) {
-    const audience = process.env.PAM_ADUSER_AUDIENCE;
-    const idportenToken = request.headers.get('authorization');
-
-    const replacedToken = idportenToken.replace('Bearer ', '');
-    const token = await grant(replacedToken, audience);
-
-    if(token === "") {
-        return new Response("Det har skjedd en feil ved utveksling av token", {
-            status: 401
-        })
-    }
-    return token;
-}
-
-function createAuthorizationAndContentTypeHeaders(token, csrf) {
-    const requestHeaders= new Headers()
-    requestHeaders.set('authorization', `Bearer ${token}`);
-    requestHeaders.set('content-type', 'application/json');
-    if (csrf) {
-        requestHeaders.set('cookie', `${csrfCookieName}=${csrf}`)
-        requestHeaders.set(`X-${csrfCookieName}`, csrf);
-    }
-    return requestHeaders;
-}

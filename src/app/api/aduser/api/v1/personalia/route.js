@@ -1,12 +1,8 @@
-import {grant} from "@/app/(common)/utils/tokenUtils";
+import {exchangeToken} from "@/app/(common)/utils/tokenUtils";
+import { ADUSER_URL } from "@/app/(common)/utils/constants";
 
 export async function GET(request) {
-    const aduser_url = process.env.PAM_ADUSER_URL || 'http://localhost:9017';
-    const audience = process.env.PAM_ADUSER_AUDIENCE;
-    const idportenToken = request.headers.get('authorization');
-
-    const replacedToken = idportenToken.replace('Bearer ', '');
-    const token = await grant(replacedToken, audience);
+    const token = await exchangeToken(request);
 
     if(token === "") {
         return new Response("Det har skjedd en feil ved utveksling av token", {
@@ -18,7 +14,7 @@ export async function GET(request) {
     requestHeaders.set('authorization', `Bearer ${token}`);
     requestHeaders.set('content-type', 'application/json');
 
-    let aduserUrl = aduser_url + "/aduser/api/v1/personalia"
+    let aduserUrl = `${ADUSER_URL}/aduser/api/v1/personalia`
 
     const res = await fetch(aduserUrl, {
         credentials: "same-origin",
