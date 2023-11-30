@@ -81,7 +81,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
 
     return (
         <>
-            <Heading level="2" size="large" align="left" className="mb-8">
+            <Heading level="2" size="large" align="left" className="mb-4">
                 Lagrede søk og favoritter
             </Heading>
             <BodyLong>
@@ -99,7 +99,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-4">
+                    <BodyLong className="mb-2">
                         e-postadresse som brukes for varsel om nye treff i lagrede søk
                     </BodyLong>
                 </li>

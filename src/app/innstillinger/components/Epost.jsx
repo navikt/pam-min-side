@@ -86,13 +86,14 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
         <>
             { harSamtykket && (
                 <>
+                    <div className="mb-4"></div>
                     <Heading level="3" size="medium" align="left" className="mb-4">
                         E-postadresse for varsel om nye treff i lagrede søk
                     </Heading>
                     <BodyLong className="mb-4">
                         E-postadressen blir kun brukt til varsel om nye treff for dine lagrede søk.
                     </BodyLong>
-                    <BodyLong className="mb-4">
+                    <BodyLong className="mb-6">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
                         <NextLink href={`${ARBEIDSPLASSEN_URL}/stillinger/lagrede-sok`} passHref legacyBehavior>

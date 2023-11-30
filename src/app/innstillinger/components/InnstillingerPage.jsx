@@ -59,7 +59,7 @@ export default function InnstillingerPage() {
                     </BodyLong>
                 </Alert>
             )}
-            <Heading level="1" size="xlarge" align="center" className="mb-16">
+            <Heading level="1" size="xlarge" align="center" className="mb-12">
                 Samtykker og innstillinger
             </Heading>
 
@@ -87,7 +87,7 @@ export default function InnstillingerPage() {
                     harVerifisertEpost={harVerifisertEpost}
                 />
             </VStack>
-            <Heading level="2" size="large" className="mb-2">
+            <Heading level="2" size="large" className="mb-5">
                 CV og jobbønsker
             </Heading>
             <LinkPanel href="/personinnstillinger" className="arb-link-panel-secondary">
