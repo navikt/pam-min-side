@@ -1,11 +1,10 @@
-"use client"
 import { useEffect, useState } from "react";
 import React from "react";
 
-export const NameContext = React.createContext({});
+export const PersonaliaContext = React.createContext({});
 
-const NameProvider = ({children}) => {
-    const [name, setName] = useState("");
+const PersonaliaProvider = ({children}) => {
+    const [personalia, setPersonalia] = useState({});
 
     useEffect(() => {
         async function fetchPersonalia() {
@@ -14,17 +13,17 @@ const NameProvider = ({children}) => {
             })
             if (response.status === 200) {
                 const json = await response.json();
-                setName(json?.navn);
+                setPersonalia(json);
             }
         }
         fetchPersonalia();
     }, []);
 
     return (
-        <NameContext.Provider value={name}>
+        <PersonaliaContext.Provider value={personalia}>
             {children}
-        </NameContext.Provider>
+        </PersonaliaContext.Provider>
     )
 }
 
-export default NameProvider;
+export default PersonaliaProvider;

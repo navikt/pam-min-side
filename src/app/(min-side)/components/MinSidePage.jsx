@@ -3,16 +3,16 @@
 import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { useContext } from "react";
-import { NameContext } from "@/app/(common)/components/context/NameContext";
+import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 import { ARBEIDSPLASSEN_URL } from "@/app/(common)/utils/constants";
 
 export default function MinSidePage() {
-    const navn = useContext(NameContext);
+    const personalia = useContext(PersonaliaContext);
 
     return (
         <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
             <Heading level="1" size="xlarge" align="center" className="mb-1">
-                {navn}
+                {personalia.navn}
             </Heading>
 
             <VStack align="center" className="mb-8">

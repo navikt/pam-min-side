@@ -6,20 +6,22 @@ import {
     VStack,
     LinkPanel, Alert, BodyLong
 } from "@navikt/ds-react";
-import {useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import LagredeSokOgFavoritter from "@/app/innstillinger/components/LagredeSokOgFavoritter";
 import Epost from "@/app/innstillinger/components/Epost";
+import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 
 export default function InnstillingerPage() {
 
     const [response, setResponse] = useState({});
     const [harSamtykket, setHarSamtykket] = useState(null);
-    const [navn, setNavn] = useState("Test");
     const [epost, setEpost] = useState("");
     const [uuid, setUuid] = useState(null);
     const [harVerifisertEpost, setVerifisertEpost] = useState(null);
     const [lagretEpost, setLagretEpost] = useState("");
     const [requestFeilet, setRequestFeilet] = useState(false);
+
+    const personalia = useContext(PersonaliaContext);
 
     useEffect(() => {
         fetchSamtykke();
@@ -37,7 +39,6 @@ export default function InnstillingerPage() {
             setEpost(json.email || "")
             setLagretEpost(json.email || "")
             setVerifisertEpost(json.verifiedEmail)
-            setNavn(json.name)
             setUuid(json.uuid)
         } else if (response.status === 404) {
             setHarSamtykket(false);
@@ -68,7 +69,7 @@ export default function InnstillingerPage() {
                     setHarSamtykket={setHarSamtykket}
                     epost={epost}
                     setEpost={setEpost}
-                    navn={navn}
+                    navn={personalia.navn}
                     setUuid={setUuid}
                     setVerifisertEpost={setVerifisertEpost}
                     setLagretEpost={setLagretEpost}
@@ -79,7 +80,7 @@ export default function InnstillingerPage() {
                     setHarSamtykket={setHarSamtykket}
                     epost={epost}
                     setEpost={setEpost}
-                    navn={navn}
+                    navn={personalia.navn}
                     uuid={uuid}
                     lagretEpost={lagretEpost}
                     setLagretEpost={setLagretEpost}
