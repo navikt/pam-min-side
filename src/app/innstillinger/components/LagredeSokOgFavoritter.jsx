@@ -157,7 +157,6 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
-                            size="small"
                             variant="secondary"
                             onClick={() => setVisSamtykketekst(false)}
                             id="confirmationPopup--avbryt"
@@ -186,7 +185,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         <ExpansionCard
                             size="small"
                             aria-label="Small-variant"
-                            className="mb-8"
+                            className="mb-4"
                             onToggle={onExpandedChange}
                             open={expanded}
                         >
@@ -220,15 +219,13 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                     <Modal.Footer>
                         <HStack gap="4">
                             <Button
-                                size="small"
-                                variant="secondary"
+                                variant="tertiary"
                                 onClick={onCloseSamtykkeModal}
                                 id="avbryt-lagrede-søk-og-favoritter"
                             >
                                 Avbryt
                             </Button>
                             <Button
-                                size="small"
                                 variant="primary"
                                 onClick={() => onSamtykke(epost, navn)}
                                 id="lagrede-søk-og-favoritter"
