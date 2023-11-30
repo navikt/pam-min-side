@@ -1,7 +1,6 @@
 import {
     createAuthorizationAndContentTypeHeaders, CSRF_COOKIE_NAME,
     exchangeToken,
-    grant
 } from "@/app/(common)/utils/tokenUtils";
 import { ADUSER_URL } from "@/app/(common)/utils/constants";
 

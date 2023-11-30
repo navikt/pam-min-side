@@ -69,6 +69,12 @@ export async function isTokenValid(token) {
 }
 
 export const grant = async (accessToken, tokenAudience) => {
+    const validToken = await isTokenValid(accessToken);
+
+    if(!validToken) {
+        return "";
+    }
+
     let tokenSet;
     client = await getClient();
 
@@ -100,6 +106,7 @@ export const grant = async (accessToken, tokenAudience) => {
             }
 
         logger.error(`Kunne ikke veksle inn token: ${error.message}`);
+        return "";
     }
 
     return tokenSet.access_token;
@@ -116,12 +123,14 @@ export async function exchangeToken(request) {
     const idportenToken = request.headers.get('authorization');
 
     const replacedToken = idportenToken.replace('Bearer ', '');
-    try {
-        return await grant(replacedToken, audience);
-    } catch (e) {
-        logger.error(`feil ved veksling til tokenx: ${e.message}`)
+    const token = await grant(replacedToken, audience);
+
+    if(token === "") {
+        return new Response("Det har skjedd en feil ved utveksling av token", {
+            status: 401
+        })
     }
-    return "";
+    return token;
 }
 
 export function createAuthorizationAndContentTypeHeaders(token, csrf) {

@@ -1,18 +1,13 @@
-import logger from "@/app/(common)/utils/logger";
-import {grant} from "@/app/(common)/utils/tokenUtils";
+import {exchangeToken} from "@/app/(common)/utils/tokenUtils";
 import { ADUSER_URL } from "@/app/(common)/utils/constants";
 
 export async function GET(request) {
-    const audience = process.env.PAM_ADUSER_AUDIENCE;
-    const idportenToken = request.headers.get('authorization');
+    const token = await exchangeToken(request);
 
-    const replacedToken = idportenToken.replace('Bearer ', '');
-    let token;
-
-    try {
-        token = await grant(replacedToken, audience);
-    } catch (e) {
-        logger.error(`feil ved veksling til tokenx: ${e.message}`)
+    if(token === "") {
+        return new Response("Det har skjedd en feil ved utveksling av token", {
+            status: 401
+        })
     }
 
     const requestHeaders = new Headers(request.headers);
