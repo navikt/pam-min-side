@@ -8,12 +8,11 @@ import Kode6IkkeTilgang from "@/app/(common)/components/tilgang/Kode6IkkeTilgang
 export default function SkulInnholdHvisIkkeTilgang({children}) {
 
     const personalia = useContext(PersonaliaContext);
-
-    if (personalia.erUnderFemten === true) {
+    if (personalia.data && personalia.data.erUnderFemten === true) {
         return <UngIkkeTilgang/>;
     }
 
-    if (personalia.kanLoggePaa === false) {
+    if (personalia.data && personalia.data.kanLoggePaa === false) {
         return <Kode6IkkeTilgang/>;
     }
 
