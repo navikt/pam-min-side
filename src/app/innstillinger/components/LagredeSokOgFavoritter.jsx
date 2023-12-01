@@ -112,6 +112,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                 )}
                 {harSamtykket ? (
                     <Button
+                        disabled={slettSamtykkePanel}
                         size="small"
                         variant="tertiary"
                         onClick={() => setSlettSamtykkePanel(true)}
