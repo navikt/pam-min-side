@@ -8,7 +8,7 @@ export default function Kode6IkkeTilgang() {
             <VStack align="center">
                 <WorriedFigure className="mb-8" />
                 <Heading level="1" size="large" className="text-center" spacing>
-                    Du har ikke rett tilgang for å ta i bruk de innloggede tjenestene
+                    Du har ikke tilgang til å ta i bruk de innloggede tjenestene
                 </Heading>
             </VStack>
         </section>
