@@ -204,7 +204,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     <Button
                                         size="small"
                                         variant="primary"
-                                        id="slett-epost"
+                                        id="ja-slett-epost"
                                         onClick={() => slettEpost(null, navn, uuid) }
                                     >
                                         Ja, slett e-postadresse
@@ -226,7 +226,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </Alert>
                             {verifiseringspostSendt && (
                                 <>
-                                    <Alert variant="info">
+                                    <Alert variant="info" className="mb-4">
                                         <Heading level="5" size="xsmall" align="left" className="mb-2">
                                             En ny verifiseringsmail er sendt til {epost}
                                         </Heading>

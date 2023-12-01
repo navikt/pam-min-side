@@ -13,6 +13,7 @@ import LagredeSokOgFavoritter from "@/app/innstillinger/components/LagredeSokOgF
 import Epost from "@/app/innstillinger/components/Epost";
 import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 import LoadingPage from "@/app/(common)/components/LoadingPage";
+import {ARBEIDSPLASSEN_URL} from "@/app/(common)/utils/constants";
 
 export default function InnstillingerPage() {
 
@@ -31,21 +32,21 @@ export default function InnstillingerPage() {
     }, []);
 
     async function fetchSamtykke() {
-        setsamtykkeStatus("pending")
-        const response = await fetch("/min-side/api/aduser/api/v1/user")
+        setsamtykkeStatus("pending");
+        const response = await fetch("/min-side/api/aduser/api/v1/user");
         if (response.status === 200) {
             const json = await response.json();
             setHarSamtykket(true);
-            setEpost(json.email || "")
-            setLagretEpost(json.email || "")
-            setVerifisertEpost(json.verifiedEmail)
-            setUuid(json.uuid)
-            setsamtykkeStatus("success")
+            setEpost(json.email || "");
+            setLagretEpost(json.email || "");
+            setVerifisertEpost(json.verifiedEmail);
+            setUuid(json.uuid);
+            setsamtykkeStatus("success");
         } else if (response.status === 404) {
             setHarSamtykket(false);
-            setsamtykkeStatus("success")
+            setsamtykkeStatus("success");
         } else {
-            setRequestFeilet(true)
+            setRequestFeilet(true);
         }
     }
 
@@ -97,7 +98,7 @@ export default function InnstillingerPage() {
                     <Heading level="2" size="large" className="mb-5">
                         CV og jobbønsker
                     </Heading>
-                    <LinkPanel href="/personinnstillinger" className="arb-link-panel-secondary">
+                    <LinkPanel href={`${ARBEIDSPLASSEN_URL}/personinnstillinger`} className="arb-link-panel-secondary">
                         <LinkPanel.Title>Gå til samtykke for CV og jobbønsker</LinkPanel.Title>
                     </LinkPanel>
                 </Box>

@@ -22,7 +22,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
     const [samtykkeError, setSamtykkeError] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [bekreftSamtykke, setBekreftSamtykke] = useState(false);
-    const [slettSamtykkeModal, setSlettSamtykkeModal] = useState(false);
+    const [slettSamtykkePanel, setSlettSamtykkePanel] = useState(false);
     const [requestFeilet, setRequestFeilet] = useState(false);
 
     const onCloseSamtykkeModal = () => {
@@ -49,9 +49,9 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                 setUuid(json.uuid);
                 setSamtykkeModal(false);
                 setSamtykkeError(false);
-                setRequestFeilet(false)
+                setRequestFeilet(false);
             } else {
-                setRequestFeilet(true)
+                setRequestFeilet(true);
             }
         } else {
             setSamtykkeError(true);
@@ -68,10 +68,10 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
             setVerifisertEpost(null);
             setEpost(null);
             setLagretEpost(null);
-            setSlettSamtykkeModal(false);
+            setSlettSamtykkePanel(false);
             setBekreftSamtykke(false);
         } else {
-            setRequestFeilet(true)
+            setRequestFeilet(true);
         }
     }
 
@@ -114,7 +114,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                     <Button
                         size="small"
                         variant="tertiary"
-                        onClick={() => setSlettSamtykkeModal(true)}
+                        onClick={() => setSlettSamtykkePanel(true)}
                         id="slett-samtykke"
                         icon={<TrashIcon aria-hidden="true" fontSize="1.25rem" />}
                     >
@@ -159,7 +159,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         <Button
                             variant="secondary"
                             onClick={() => setVisSamtykketekst(false)}
-                            id="confirmationPopup--avbryt"
+                            id="lukk-samtykketekst"
                         >
                             Lukk
                         </Button>
@@ -236,7 +236,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                     </Modal.Footer>
                 </Modal>
             </HStack>
-            { harSamtykket && slettSamtykkeModal && (
+            { harSamtykket && slettSamtykkePanel && (
                 <Box padding="6" background="surface-alt-2-subtle" borderRadius="large" className="mb-4">
                     <Heading level="4" size="small" align="left" className="mb-2">
                         Bekreft at du ønsker å slette samtykket for lagrede søk og favoritter
@@ -251,7 +251,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                                 size="small"
                                 variant="secondary"
                                 id="avbryt-slett-samtykke"
-                                onClick={() => setSlettSamtykkeModal(false)}
+                                onClick={() => setSlettSamtykkePanel(false)}
                             >
                                 Avbryt
                             </Button>
