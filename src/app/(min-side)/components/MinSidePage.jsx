@@ -6,9 +6,14 @@ import { useContext } from "react";
 import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 import { ARBEIDSPLASSEN_URL } from "@/app/(common)/utils/constants";
 import LoadingPage from "@/app/(common)/components/LoadingPage";
+import ErrorPage from "@/app/(common)/components/ErrorPage";
 
 export default function MinSidePage() {
     const personalia = useContext(PersonaliaContext);
+
+    if (personalia.status === "error") {
+        return <ErrorPage />;
+    }
 
     return (
         <>
