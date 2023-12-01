@@ -9,7 +9,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
 
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
-    const [slettEpostModal, setSlettEpostModal] = useState(false);
+    const [slettEpostPanel, setSlettEpostPanel] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
     const [requestFeilet, setRequestFeilet] = useState(false);
 
@@ -61,7 +61,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
             setIsEpostError(false);
             setEpost(null);
             setLagretEpost(null);
-            setSlettEpostModal(false);
+            setSlettEpostPanel(false);
             setIsLagreEpostPanel(false);
             setVerifiseringspostSendt(false);
             setRequestFeilet(false);
@@ -172,18 +172,18 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         )}
                         {epost && lagretEpost && (
                             <Button
-                                disabled={slettEpostModal}
+                                disabled={slettEpostPanel}
                                 size="small"
                                 variant="tertiary"
                                 id="slett-epost"
-                                onClick={() => setSlettEpostModal(true)}
+                                onClick={() => setSlettEpostPanel(true)}
                                 icon={<TrashIcon aria-hidden="true" fontSize="1.25rem" />}
                             >
                                 Slett e-postadresse
                             </Button>
                         )}
                     </HStack>
-                    { slettEpostModal && (
+                    { slettEpostPanel && (
                         <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
                             <Heading level="4" size="small" align="left" className="mb-2">
                                 Bekreft at du ønsker å slette e-postadressen din
@@ -197,7 +197,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                         size="small"
                                         variant="secondary"
                                         id="avbryt-slett-epost"
-                                        onClick={() => setSlettEpostModal(false)}
+                                        onClick={() => setSlettEpostPanel(false)}
                                     >
                                         Avbryt
                                     </Button>
