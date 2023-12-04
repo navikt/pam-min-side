@@ -15,7 +15,7 @@ import {FileTextIcon, CheckmarkCircleIcon, TrashIcon} from "@navikt/aksel-icons"
 import Samtykketekst from "@/app/innstillinger/components/Samtykketekst";
 import {useState} from "react";
 
-export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setLagretEpost}) {
+export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setLagretEpost }) {
 
     const [samtykkeModal, setSamtykkeModal] = useState(false);
     const [visSamtykketekst, setVisSamtykketekst] = useState(false);
@@ -203,7 +203,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                             checked={bekreftSamtykke}
                             label="Jeg har lest og forstått samtykketeksten, og ønsker ta i bruk lagrede søk og favoritter."
                             onChange={() => setBekreftSamtykke((x) => !x)}
-                            error={samtykkeError && "Du må samtykke før du kan fortsette."}
+                            error={samtykkeError && "Du må samtykke før du kan ta i bruk lagrede søk og favoritter"}
                         >
                         </ConfirmationPanel>
                         {requestFeilet && (
@@ -218,28 +218,26 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         )}
                     </Modal.Body>
                     <Modal.Footer>
-                        <HStack gap="4">
-                            <Button
-                                variant="tertiary"
-                                onClick={onCloseSamtykkeModal}
-                                id="avbryt-lagrede-søk-og-favoritter"
-                            >
-                                Avbryt
-                            </Button>
-                            <Button
-                                variant="primary"
-                                onClick={() => onSamtykke(epost, navn)}
-                                id="lagrede-søk-og-favoritter"
-                            >
-                                Ta i bruk lagrede søk og favoritter
-                            </Button>
-                        </HStack>
+                        <Button
+                            variant="primary"
+                            onClick={() => onSamtykke(epost, navn)}
+                            id="lagrede-søk-og-favoritter"
+                        >
+                            Ta i bruk lagrede søk og favoritter
+                        </Button>
+                        <Button
+                            variant="tertiary"
+                            onClick={onCloseSamtykkeModal}
+                            id="avbryt-lagrede-søk-og-favoritter"
+                        >
+                            Avbryt
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </HStack>
             { harSamtykket && slettSamtykkePanel && (
                 <Box padding="6" background="surface-alt-2-subtle" borderRadius="large" className="mb-4">
-                    <Heading level="4" size="small" align="left" className="mb-2">
+                    <Heading level="5" size="xsmall" align="left" className="mb-2">
                         Bekreft at du ønsker å slette samtykket for lagrede søk og favoritter
                     </Heading>
                     <BodyLong className="mb-3">

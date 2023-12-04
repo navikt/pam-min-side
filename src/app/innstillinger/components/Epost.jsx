@@ -5,12 +5,13 @@ import {useState} from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
 import {ARBEIDSPLASSEN_URL} from "@/app/(common)/utils/constants";
 
-export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost }) {
+export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost, setVerifisertEpost }) {
 
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
     const [slettEpostPanel, setSlettEpostPanel] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
+    const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState(true);
     const [requestFeilet, setRequestFeilet] = useState(false);
 
     async function lagreEpost(){
@@ -32,8 +33,11 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                 setLagretEpost(epost);
                 setVerifiseringspostSendt(false);
                 setRequestFeilet(false);
+                if (lagretEpost !== epost) {
+                    setVerifisertEpost(false);
+                }
             } else {
-                setRequestFeilet(true)
+                setRequestFeilet(true);
             }
             setIsEpostError(false);
         }
@@ -66,7 +70,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
             setVerifiseringspostSendt(false);
             setRequestFeilet(false);
         } else {
-            setRequestFeilet(true)
+            setRequestFeilet(true);
         }
     }
 
@@ -76,6 +80,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
         })
         if (response.status === 200) {
             setVerifiseringspostSendt(true);
+            setShowVerifiseringspostAlert(true);
             setRequestFeilet(false);
         } else {
             setRequestFeilet(true);
@@ -114,28 +119,16 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         </HStack>
                     )}
                     {(isLagreEpostPanel || epost) && (
-                        <>
-                            <HStack gap="2">
-                                {!isLagreEpostPanel &&(
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="23" viewBox="0 0 18 18" fill="none">
-                                        <path fillRule="evenodd" clipRule="evenodd" d="M9 1.6875C7.03249 1.6875 5.4375 3.28249 5.4375 5.25V6.9375H5.25C4.52513 6.9375 3.9375 7.52513 3.9375 8.25V15C3.9375 15.3107 4.18934 15.5625 4.5 15.5625H13.5C13.8107 15.5625 14.0625 15.3107 14.0625 15V8.25C14.0625 7.52513 13.4749 6.9375 12.75 6.9375H12.5625V5.25C12.5625 3.28249 10.9675 1.6875 9 1.6875ZM11.4375 6.9375V5.25C11.4375 3.90381 10.3462 2.8125 9 2.8125C7.65381 2.8125 6.5625 3.90381 6.5625 5.25V6.9375H11.4375ZM9 9.75C8.37868 9.75 7.875 10.2537 7.875 10.875C7.875 11.2914 8.10124 11.655 8.4375 11.8495V12.75C8.4375 13.0607 8.68934 13.3125 9 13.3125C9.31066 13.3125 9.5625 13.0607 9.5625 12.75V11.8495C9.89876 11.655 10.125 11.2914 10.125 10.875C10.125 10.2537 9.62132 9.75 9 9.75Z" fill="#003141"/>
-                                    </svg>
-                                )}
-                                <Heading level="5" size="xsmall" align="left">
-                                    E-postadresse for varsel
-                                </Heading>
-                            </HStack>
-                            <TextField
-                                disabled={!isLagreEpostPanel}
-                                className="mb-4"
-                                id="epost-adresse"
-                                label=""
-                                type="email"
-                                value={epost || ""}
-                                onChange={(e) => setEpost(e.target.value)}
-                                error={isEpostError && "E-postadressen er ugyldig, kontroller at du ikke savner noen tegn"}
-                            />
-                        </>
+                        <TextField
+                            readOnly={!isLagreEpostPanel}
+                            className="mb-4"
+                            id="epost-adresse"
+                            label="E-postadresse for varsel"
+                            type="email"
+                            value={epost || ""}
+                            onChange={(e) => setEpost(e.target.value)}
+                            error={isEpostError && "E-postadressen er ugyldig, kontroller at du ikke savner noen tegn"}
+                        />
                     )}
                     <HStack gap="2" align="start" className="mb-4">
                         {(isLagreEpostPanel) && (
@@ -224,9 +217,9 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     bekreftelsen kan du sende en ny.
                                 </BodyLong>
                             </Alert>
-                            {verifiseringspostSendt && (
+                            {verifiseringspostSendt && showVerifiseringspostAlert && (
                                 <>
-                                    <Alert variant="info" className="mb-4">
+                                    <Alert variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
                                         <Heading level="5" size="xsmall" align="left" className="mb-2">
                                             En ny verifiseringsmail er sendt til {epost}
                                         </Heading>
@@ -236,7 +229,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     </Alert>
                                 </>
                             )}
-                            <HStack align="start">
+                            <HStack align="start" className="mb-4">
                                 <Button
                                     size="small"
                                     variant="tertiary"

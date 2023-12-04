@@ -93,12 +93,13 @@ export default function InnstillingerPage() {
                             lagretEpost={lagretEpost}
                             setLagretEpost={setLagretEpost}
                             harVerifisertEpost={harVerifisertEpost}
+                            setVerifisertEpost={setVerifisertEpost}
                         />
                     </VStack>
                     <Heading level="2" size="large" className="mb-5">
                         CV og jobbønsker
                     </Heading>
-                    <LinkPanel href={`${ARBEIDSPLASSEN_URL}/personinnstillinger`} className="arb-link-panel-secondary">
+                    <LinkPanel href={`${ARBEIDSPLASSEN_URL}/personinnstillinger`} className="arb-link-panel-secondary mb-14">
                         <LinkPanel.Title>Gå til samtykke for CV og jobbønsker</LinkPanel.Title>
                     </LinkPanel>
                 </Box>

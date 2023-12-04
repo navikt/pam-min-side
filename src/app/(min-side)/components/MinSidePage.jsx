@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Heading, HStack, LinkPanel, VStack } from "@navikt/ds-react";
+import { CogIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { useContext } from "react";
 import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
@@ -28,12 +29,17 @@ export default function MinSidePage() {
                     </Heading>
 
                     <VStack align="center" className="mb-8">
-                        <Button variant="tertiary" as={Link} href="/innstillinger">
+                        <Button
+                            variant="tertiary"
+                            as={Link}
+                            href="/innstillinger"
+                            icon={<CogIcon aria-hidden="true" fontSize="1.5rem" />}
+                        >
                             Samtykker og innstillinger
                         </Button>
                     </VStack>
 
-                    <VStack gap="4" className="mb-12">
+                    <VStack gap="4" className="mb-14">
                         <HStack gap="4" align="start">
                             <LinkPanel href={`${ARBEIDSPLASSEN_URL}/stillinger/lagrede-sok`} className="arb-link-panel-primary flex-1">
                                 <LinkPanel.Title>Mine lagrede søk</LinkPanel.Title>
