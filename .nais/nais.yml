@@ -48,6 +48,8 @@ spec:
       value: {{ pam_aduser_audience }}
     - name: NEXT_PUBLIC_ARBEIDSPLASSEN_URL
       value: {{ arbeidsplassen_url }}
+    - name: NEXT_PUBLIC_AMPLITUDE_TOKEN
+      value: {{ amplitude_token }}
   accessPolicy:
     outbound:
       rules:
