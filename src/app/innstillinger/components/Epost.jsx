@@ -178,7 +178,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                     </HStack>
                     { slettEpostPanel && (
                         <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
-                            <Heading level="4" size="small" align="left" className="mb-2">
+                            <Heading level="5" size="xsmall" align="left" className="mb-2">
                                 Bekreft at du ønsker å slette e-postadressen din
                             </Heading>
                             <BodyLong className="mb-3">
