@@ -9,7 +9,8 @@ if(typeof window !== 'undefined') {
 let initialized = false;
 function getAmplitudeKey() {
     if(typeof window !== 'undefined') {
-        if (window.location.href.includes("nav.no")) return AMPLITUDE_TOKEN;
+        if (window.location.href.includes("dev.nav.no")) return "3acd3a52e065d2d99856a12e7e9e1432"; // dev
+        if (window.location.href.includes("nav.no")) return "a7b3f00008ae250a08c3ebbc6bf718f9"; // prod
         return ""; // other e.g. localhost
     } else {
         return ""; // server side
