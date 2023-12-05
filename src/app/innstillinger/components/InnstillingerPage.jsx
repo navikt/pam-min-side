@@ -24,6 +24,7 @@ export default function InnstillingerPage() {
     const [lagretEpost, setLagretEpost] = useState("");
     const [requestFeilet, setRequestFeilet] = useState(false);
     const [samtykkeStatus, setsamtykkeStatus] = useState("not-fetched");
+    const [slettEpostPanel, setSlettEpostPanel] = useState(false);
 
     const personalia = useContext(PersonaliaContext);
 
@@ -82,6 +83,7 @@ export default function InnstillingerPage() {
                             setUuid={setUuid}
                             setVerifisertEpost={setVerifisertEpost}
                             setLagretEpost={setLagretEpost}
+                            setSlettEpostPanel={setSlettEpostPanel}
                         />
                         <Epost
                             harSamtykket={harSamtykket}
@@ -94,6 +96,8 @@ export default function InnstillingerPage() {
                             setLagretEpost={setLagretEpost}
                             harVerifisertEpost={harVerifisertEpost}
                             setVerifisertEpost={setVerifisertEpost}
+                            slettEpostPanel={slettEpostPanel}
+                            setSlettEpostPanel={setSlettEpostPanel}
                         />
                     </VStack>
                     <Heading level="2" size="large" className="mb-5">

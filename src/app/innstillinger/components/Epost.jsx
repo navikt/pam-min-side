@@ -5,11 +5,10 @@ import {useState} from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
 import {ARBEIDSPLASSEN_URL} from "@/app/(common)/utils/constants";
 
-export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost, setVerifisertEpost }) {
+export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost, setVerifisertEpost, slettEpostPanel, setSlettEpostPanel }) {
 
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
-    const [slettEpostPanel, setSlettEpostPanel] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
     const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState(true);
     const [requestFeilet, setRequestFeilet] = useState(false);

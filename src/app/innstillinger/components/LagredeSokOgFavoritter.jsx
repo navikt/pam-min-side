@@ -15,7 +15,7 @@ import {FileTextIcon, CheckmarkCircleIcon, TrashIcon} from "@navikt/aksel-icons"
 import Samtykketekst from "@/app/innstillinger/components/Samtykketekst";
 import {useState} from "react";
 
-export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setLagretEpost }) {
+export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, navn, setHarSamtykket, setUuid, setVerifisertEpost, setLagretEpost, setSlettEpostPanel }) {
 
     const [samtykkeModal, setSamtykkeModal] = useState(false);
     const [visSamtykketekst, setVisSamtykketekst] = useState(false);
@@ -70,6 +70,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
             setLagretEpost(null);
             setSlettSamtykkePanel(false);
             setBekreftSamtykke(false);
+            setSlettEpostPanel(false);
         } else {
             setRequestFeilet(true);
         }
@@ -78,6 +79,11 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
     const onExpandedChange = (newExpanded) => {
         setExpanded(newExpanded);
     };
+
+    function onSamtykkeCheckboxClick() {
+        setSamtykkeError(false);
+        setBekreftSamtykke((x) => !x)
+    }
 
     return (
         <>
@@ -202,7 +208,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         <ConfirmationPanel
                             checked={bekreftSamtykke}
                             label="Jeg har lest og forstått samtykketeksten, og ønsker ta i bruk lagrede søk og favoritter."
-                            onChange={() => setBekreftSamtykke((x) => !x)}
+                            onChange={() => onSamtykkeCheckboxClick() }
                             error={samtykkeError && "Du må samtykke før du kan ta i bruk lagrede søk og favoritter"}
                         >
                         </ConfirmationPanel>
@@ -245,7 +251,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         dersom du har oppgitt det. Informasjonen vil ikke kunne gjenopprettes.
                     </BodyLong>
                     <VStack align="end">
-                        <HStack gap="4">
+                        <HStack gap="2">
                             <Button
                                 size="small"
                                 variant="secondary"
