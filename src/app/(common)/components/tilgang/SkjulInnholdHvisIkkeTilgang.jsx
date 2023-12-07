@@ -7,6 +7,10 @@ import IkkeTilgang from "@/app/(common)/components/tilgang/IkkeTilgang";
 import {BodyLong, Button, Modal} from "@navikt/ds-react";
 import {WorriedFigure} from "@navikt/arbeidsplassen-react";
 
+function logout() {
+    window.location.href = `/min-side/oauth2/logout?redirect=/`;
+}
+
 export default function SkulInnholdHvisIkkeTilgang({children}) {
 
     const personalia = useContext(PersonaliaContext);
