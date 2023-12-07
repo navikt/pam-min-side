@@ -11,9 +11,10 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
-    const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState(true);
+    const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState(false);
     const [requestFeilet, setRequestFeilet] = useState(false);
     const [isEpostBekreftModalOpen, setIsEpostBekreftModalOpen] = useState(false);
+    const [showVerifiseringspostAlertModal, setShowVerifiseringspostAlertModal] = useState(false);
 
     async function lagreEpost(){
         if (!epost || !ValidateEmail(epost)) {
@@ -82,9 +83,12 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
         })
         if (response.status === 200) {
             setVerifiseringspostSendt(true);
-            setShowVerifiseringspostAlert(true);
+            if (isEpostBekreftModalOpen) {
+                setShowVerifiseringspostAlertModal(true);
+            } else {
+                setShowVerifiseringspostAlert(true);
+            }
             setRequestFeilet(false);
-            setIsEpostBekreftModalOpen(false);
         } else {
             setRequestFeilet(true);
         }
@@ -233,9 +237,16 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                 Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke har
                                 fått en e-post innen et par minutter så kan du prøve å sende en ny.
                             </BodyLong>
-                            <HStack justify="center">
+                            <HStack justify="center" className={showVerifiseringspostAlertModal ? "mb-6" : ""}>
                                 <FigureWithEnvelope />
                             </HStack>
+                            {verifiseringspostSendt && showVerifiseringspostAlertModal && (
+                                <>
+                                    <Alert variant="info" closeButton onClose={() => setShowVerifiseringspostAlertModal(false)}>
+                                        En ny verifiseringsmail er sendt til {epost}
+                                    </Alert>
+                                </>
+                            )}
                         </Modal.Body>
                         <Modal.Footer>
                             <Button
@@ -269,12 +280,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             {verifiseringspostSendt && showVerifiseringspostAlert && (
                                 <>
                                     <Alert variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
-                                        <Heading level="5" size="xsmall" align="left" className="mb-2">
-                                            En ny verifiseringsmail er sendt til {epost}
-                                        </Heading>
-                                        <BodyLong className="mb-3">
-                                            Når du har bekreftet e-postadressen din vil du kunne motta nye treff i lagrede søk.
-                                        </BodyLong>
+                                        En ny verifiseringsmail er sendt til {epost}
                                     </Alert>
                                 </>
                             )}
