@@ -9,7 +9,7 @@ export default function Samtykketekst() {
             </BodyLong>
             <BodyLong className="mb-6">
                 I{" "}
-                <DsLink href="https://www.nav.no/personvernerklaering">NAVs personvernerklæring</DsLink> finner du generell informasjon om behandling av personopplysninger i NAV og hvilke rettigheter du har.
+                <DsLink href="https://www.nav.no/personvernerklaering" inlineText>NAVs personvernerklæring</DsLink> finner du generell informasjon om behandling av personopplysninger i NAV og hvilke rettigheter du har.
             </BodyLong>
             <Heading level="4" size="small">
                 Vi deler ikke din informasjon med andre

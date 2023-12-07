@@ -1,17 +1,19 @@
-import {Alert, BodyLong, Box, Button, Heading, HStack, Link as DsLink, TextField, VStack} from "@navikt/ds-react";
+import {Alert, BodyLong, Box, Button, Heading, HStack, Link as DsLink, Modal, TextField, VStack} from "@navikt/ds-react";
 import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon} from "@navikt/aksel-icons";
 import NextLink from "next/link";
 import {useState} from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
 import {ARBEIDSPLASSEN_URL} from "@/app/(common)/utils/constants";
+import {FigureWithEnvelope} from "@navikt/arbeidsplassen-react";
 
-export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost, setVerifisertEpost, slettEpostPanel, setSlettEpostPanel }) {
+export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost, setVerifisertEpost, slettEpostPanel, setSlettEpostPanel, fetchSamtykke }) {
 
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
     const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState(true);
     const [requestFeilet, setRequestFeilet] = useState(false);
+    const [isEpostBekreftModalOpen, setIsEpostBekreftModalOpen] = useState(false);
 
     async function lagreEpost(){
         if (!epost || !ValidateEmail(epost)) {
@@ -35,6 +37,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                 if (lagretEpost !== epost) {
                     setVerifisertEpost(false);
                 }
+                setIsEpostBekreftModalOpen(true);
             } else {
                 setRequestFeilet(true);
             }
@@ -81,9 +84,17 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
             setVerifiseringspostSendt(true);
             setShowVerifiseringspostAlert(true);
             setRequestFeilet(false);
+            setIsEpostBekreftModalOpen(false);
         } else {
             setRequestFeilet(true);
         }
+    }
+
+    function onEpostBekreftCloseClick() {
+        if (isEpostBekreftModalOpen) {
+            fetchSamtykke();
+        }
+        setIsEpostBekreftModalOpen(false);
     }
 
     return (
@@ -101,7 +112,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
                         <NextLink href={`${ARBEIDSPLASSEN_URL}/stillinger/lagrede-sok`} passHref legacyBehavior>
-                            <DsLink>dine lagrede søk.</DsLink>
+                            <DsLink inlineText>dine lagrede søk.</DsLink>
                         </NextLink>
                     </BodyLong>
                     {!epost && !isLagreEpostPanel && (
@@ -205,6 +216,46 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </VStack>
                         </Box>
                     )}
+                    <Modal
+                        open={isEpostBekreftModalOpen}
+                        aria-label="Tilbakemelding"
+                        onClose={() => onEpostBekreftCloseClick()}
+                        width="medium"
+                        closeOnBackdropClick
+                    >
+                        <Modal.Header closeButton={true}>
+                            <Heading level="2" size="large">
+                                Sjekk e-posten din for å bekrefte adressen
+                            </Heading>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <BodyLong className="mb-6">
+                                Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke har
+                                fått en e-post innen et par minutter så kan du prøve å sende en ny.
+                            </BodyLong>
+                            <HStack justify="center">
+                                <FigureWithEnvelope />
+                            </HStack>
+                        </Modal.Body>
+                        <Modal.Footer>
+
+                            <Button
+                                variant="secondary"
+                                id="lukk-modal"
+                                onClick={() => onEpostBekreftCloseClick()}
+                            >
+                                Lukk
+                            </Button>
+                            <Button
+                                variant="tertiary"
+                                id="send-ny-bekreftelse-epost-modal"
+                                onClick={() => sendNyBekreftelse()}
+                                icon={<EnvelopeClosedIcon aria-hidden="true" fontSize="1.5rem" />}
+                            >
+                                Send ny bekreftelse på e-post
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                     {lagretEpost && !harVerifisertEpost && (
                         <>
                             <Alert variant="warning" className="mb-4">

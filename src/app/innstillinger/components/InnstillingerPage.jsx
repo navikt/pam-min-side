@@ -98,6 +98,7 @@ export default function InnstillingerPage() {
                             setVerifisertEpost={setVerifisertEpost}
                             slettEpostPanel={slettEpostPanel}
                             setSlettEpostPanel={setSlettEpostPanel}
+                            fetchSamtykke={fetchSamtykke}
                         />
                     </VStack>
                     <Heading level="2" size="large" className="mb-5">
