@@ -36,8 +36,8 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                 setRequestFeilet(false);
                 if (lagretEpost !== epost) {
                     setVerifisertEpost(false);
+                    setIsEpostBekreftModalOpen(true);
                 }
-                setIsEpostBekreftModalOpen(true);
             } else {
                 setRequestFeilet(true);
             }
@@ -238,7 +238,6 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </HStack>
                         </Modal.Body>
                         <Modal.Footer>
-
                             <Button
                                 variant="secondary"
                                 id="lukk-modal"
