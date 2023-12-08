@@ -1,19 +1,12 @@
 "use client";
 
-import {
-    Box,
-    Heading,
-    VStack,
-    LinkPanel,
-    Alert,
-    BodyLong
-} from "@navikt/ds-react";
+import { Box, Heading, VStack, LinkPanel, Alert, BodyLong } from "@navikt/ds-react";
 import { useContext, useEffect, useState } from "react";
 import LagredeSokOgFavoritter from "@/app/innstillinger/components/LagredeSokOgFavoritter";
 import Epost from "@/app/innstillinger/components/Epost";
 import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 import LoadingPage from "@/app/(common)/components/LoadingPage";
-import {ARBEIDSPLASSEN_URL} from "@/app/(common)/utils/constants";
+import { ARBEIDSPLASSEN_URL } from "@/app/(common)/utils/constants";
 
 export default function InnstillingerPage() {
 
@@ -48,6 +41,7 @@ export default function InnstillingerPage() {
             setsamtykkeStatus("success");
         } else {
             setRequestFeilet(true);
+            setsamtykkeStatus("error");
         }
     }
 
