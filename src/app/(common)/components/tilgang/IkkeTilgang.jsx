@@ -2,7 +2,7 @@ import React from "react";
 import {Heading, VStack} from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 
-export default function Kode6IkkeTilgang() {
+export default function IkkeTilgang() {
     return (
         <section className="container-small mt-16 mb-16">
             <VStack align="center">
