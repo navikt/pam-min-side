@@ -3,9 +3,8 @@
 import React, { useContext } from "react";
 import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 import UngIkkeTilgang from "@/app/(common)/components/tilgang/UngIkkeTilgang";
-import IkkeTilgang from "@/app/(common)/components/tilgang/IkkeTilgang";
-import {BodyLong, Button, Modal} from "@navikt/ds-react";
-import {WorriedFigure} from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
+import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 
 function logout() {
     window.location.href = `/min-side/oauth2/logout?redirect=/`;
@@ -18,7 +17,7 @@ export default function SkulInnholdHvisIkkeTilgang({children}) {
         return <UngIkkeTilgang/>;
     }
 
-    if (personalia.data && personalia.data.kanLoggePaa === false) {
+    if (personalia.data && personalia.data.kanLoggePaa === true) {
         return <Modal
             width="medium"
             onClose={logout}
@@ -35,9 +34,9 @@ export default function SkulInnholdHvisIkkeTilgang({children}) {
                         Vi beklager dette. Du kan fortsatt søke etter stillinger og delta på jobbtreff selv
                         om du ikke er innlogget.
                     </BodyLong>
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", alignSelf: "stretch"}}>
+                    <HStack justify="center">
                         <WorriedFigure />
-                    </div>
+                    </HStack>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={logout}>
