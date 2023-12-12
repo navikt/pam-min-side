@@ -17,7 +17,7 @@ export default function SkulInnholdHvisIkkeTilgang({children}) {
         return <UngIkkeTilgang/>;
     }
 
-    if (personalia.data && personalia.data.kanLoggePaa === true) {
+    if (personalia.data && personalia.data.kanLoggePaa === false) {
         return <Modal
             width="medium"
             onClose={logout}
