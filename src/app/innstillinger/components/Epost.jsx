@@ -305,7 +305,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         Kunne ikke lagre epost / sende ut ny bekreftelse
                     </Heading>
                     <BodyLong className="mb-3">
-                        Venligst prøv igjen senere.
+                        Vennligst prøv igjen senere.
                     </BodyLong>
                 </Alert>
             )}

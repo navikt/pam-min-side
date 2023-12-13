@@ -278,7 +278,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                         Kunne ikke slette samtykke
                     </Heading>
                     <BodyLong className="mb-3">
-                        Venligst prøv igjen senere.
+                        Vennligst prøv igjen senere.
                     </BodyLong>
                 </Alert>
             )}
