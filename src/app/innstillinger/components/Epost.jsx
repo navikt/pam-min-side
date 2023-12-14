@@ -1,6 +1,6 @@
 "use client";
 
-import {Alert, BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack} from "@navikt/ds-react";
+import {Alert, BodyLong, Box, Button, Heading, HStack, Link, Modal, TextField, VStack} from "@navikt/ds-react";
 import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon} from "@navikt/aksel-icons";
 import {useState} from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
@@ -115,7 +115,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                     <BodyLong className="mb-6">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
-                        <a href={`/stillinger/lagrede-sok`}>dine lagrede søk.</a>
+                        <Link href={`/stillinger/lagrede-sok`} inlineText>dine lagrede søk.</Link>
                     </BodyLong>
                     {!epost && !isLagreEpostPanel && (
                         <HStack>
