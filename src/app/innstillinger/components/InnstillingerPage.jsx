@@ -6,7 +6,6 @@ import LagredeSokOgFavoritter from "@/app/innstillinger/components/LagredeSokOgF
 import Epost from "@/app/innstillinger/components/Epost";
 import { PersonaliaContext } from "@/app/(common)/components/context/PersonaliaContext";
 import LoadingPage from "@/app/(common)/components/LoadingPage";
-import { ARBEIDSPLASSEN_URL } from "@/app/(common)/utils/constants";
 
 export default function InnstillingerPage() {
 
@@ -98,7 +97,7 @@ export default function InnstillingerPage() {
                     <Heading level="2" size="large" className="mb-5">
                         CV og jobbønsker
                     </Heading>
-                    <LinkPanel href={`${ARBEIDSPLASSEN_URL}/personinnstillinger`} className="arb-link-panel-secondary mb-14">
+                    <LinkPanel href={`/personinnstillinger`} className="arb-link-panel-secondary mb-14">
                         <LinkPanel.Title>Gå til samtykke for CV og jobbønsker</LinkPanel.Title>
                     </LinkPanel>
                 </Box>
