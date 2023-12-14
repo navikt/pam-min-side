@@ -1,3 +1,5 @@
+"use client";
+
 import {Alert, BodyLong, Box, Button, Heading, HStack, Link as DsLink, Modal, TextField, VStack} from "@navikt/ds-react";
 import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon} from "@navikt/aksel-icons";
 import NextLink from "next/link";
