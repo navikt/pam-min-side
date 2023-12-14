@@ -3,7 +3,7 @@ import { ADUSER_URL } from "@/app/(common)/utils/constants";
 import logger from "@/app/(common)/utils/logger";
 
 export async function GET(request) {
-    logger.debug("GET personalia");
+    logger.info("GET personalia");
 
     const token = await exchangeToken(request);
 

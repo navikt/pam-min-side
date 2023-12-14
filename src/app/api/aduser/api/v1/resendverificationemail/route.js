@@ -7,7 +7,7 @@ import {
 import logger from "@/app/(common)/utils/logger";
 
 export async function PUT(request) {
-    logger.debug("PUT resendverificationemail");
+    logger.info("PUT resendverificationemail");
 
     const token = await exchangeToken(request);
     const res = await fetch(userUrl + "/resend-verification-mail", {

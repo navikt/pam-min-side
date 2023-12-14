@@ -8,7 +8,7 @@ import logger from "@/app/(common)/utils/logger";
 export const userUrl = `${ADUSER_URL}/aduser/api/v1/user`
 
 export async function GET(request) {
-    logger.debug("GET user");
+    logger.info("GET user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "GET",
@@ -26,7 +26,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-    logger.debug("POST user");
+    logger.info("POST user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "POST",
@@ -47,7 +47,7 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-    logger.debug("PUT user");
+    logger.info("PUT user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "PUT",
@@ -68,7 +68,7 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-    logger.debug("DELETE user");
+    logger.info("DELETE user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "DELETE",

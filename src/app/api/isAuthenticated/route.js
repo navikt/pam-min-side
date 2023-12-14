@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import {isTokenValid} from "@/app/(common)/utils/tokenUtils";
 
 export async function GET(request) {
+    logger.info("GET isAuthenticated");
 
     const bearerToken = headers().get('authorization')
     if (bearerToken) {
