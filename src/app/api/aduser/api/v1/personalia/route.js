@@ -1,7 +1,10 @@
 import {exchangeToken} from "@/app/(common)/utils/tokenUtils";
 import { ADUSER_URL } from "@/app/(common)/utils/constants";
+import logger from "@/app/(common)/utils/logger";
 
 export async function GET(request) {
+    logger.debug("GET personalia");
+
     const token = await exchangeToken(request);
 
     if(token === "") {

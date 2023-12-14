@@ -4,8 +4,11 @@ import {
     CSRF_COOKIE_NAME,
     exchangeToken
 } from "@/app/(common)/utils/tokenUtils";
+import logger from "@/app/(common)/utils/logger";
 
 export async function PUT(request) {
+    logger.debug("PUT resendverificationemail");
+
     const token = await exchangeToken(request);
     const res = await fetch(userUrl + "/resend-verification-mail", {
         method: "PUT",
