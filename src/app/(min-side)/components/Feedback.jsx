@@ -55,15 +55,6 @@ function Feedback() {
                         </FeedbackButton>
                     </HStack>
                 )}
-
-                <BodyLong className="text-center">
-                    Er det noe du savner eller synes kunne vært bedre setter vi stor pris på å høre mer om det.
-                </BodyLong>
-                <BodyLong className="text-center">
-                    <Link href="https://surveys.hotjar.com/92827cde-3f22-47b0-b9a6-aa12f06aa1c5">
-                        Skriv en kort tilbakemelding
-                    </Link>
-                </BodyLong>
             </VStack>
         </Panel>
     );
