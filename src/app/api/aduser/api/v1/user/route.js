@@ -13,10 +13,17 @@ export async function GET(request) {
     const res = await fetch(userUrl, {
         method: "GET",
         headers: createAuthorizationAndContentTypeHeaders(token)
+    }).catch(err => {
+        logger.error(`GET user fetch feilet '${err}'`);
+        return new Response("Fetch feilet", {
+            status: 500
+        })
     });
 
     if (!res.ok) {
-        return new Response(res.body, {
+        const text = await res.text();
+        logger.error(`GET user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
@@ -42,10 +49,9 @@ export async function POST(request) {
     });
 
     if (!res.ok) {
-        logger.error(`POST user feilet ${res.status}`);
         const text = await res.text();
-        logger.error(`POST user feilet text: ${text}`);
-        return new Response(text, {
+        logger.error(`POST user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
@@ -71,10 +77,9 @@ export async function PUT(request) {
     });
 
     if (!res.ok) {
-        logger.error(`PUT user feilet ${res.status}`);
         const text = await res.text();
-        logger.error(`PUT user feilet text: ${text}`);
-        return new Response(res.body, {
+        logger.error(`PUT user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
@@ -97,10 +102,9 @@ export async function DELETE(request) {
     });
 
     if (!res.ok) {
-        logger.error(`DELETE user feilet ${res.status}`);
         const text = await res.text();
-        logger.error(`DELETE user feilet text: ${text}`);
-        return new Response(res.body, {
+        logger.error(`DELETE user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
