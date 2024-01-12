@@ -13,9 +13,18 @@ export async function GET(request) {
     const res = await fetch(userUrl, {
         method: "GET",
         headers: createAuthorizationAndContentTypeHeaders(token)
+    }).catch(err => {
+        logger.error(`GET user fetch feilet '${err}'`);
+        return new Response("Fetch feilet", {
+            status: 500
+        })
     });
 
     if (!res.ok) {
+        if (res.status !== 404) {
+            const text = await res.text();
+            logger.error(`GET user feilet status: ${res.status} text: ${text}`);
+        }
         return new Response(res.body, {
             status: res.status
         })
@@ -34,10 +43,17 @@ export async function POST(request) {
         body: request.body,
         credentials: "same-origin",
         duplex: "half",
+    }).catch(err => {
+        logger.error(`POST user fetch feilet '${err}'`);
+        return new Response("Fetch feilet", {
+            status: 500
+        })
     });
 
     if (!res.ok) {
-        return new Response(res.body, {
+        const text = await res.text();
+        logger.error(`POST user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
@@ -55,10 +71,17 @@ export async function PUT(request) {
         body: request.body,
         credentials: "same-origin",
         duplex: "half",
+    }).catch(err => {
+        logger.error(`PUT user fetch feilet '${err}'`);
+        return new Response("Fetch feilet", {
+            status: 500
+        })
     });
 
     if (!res.ok) {
-        return new Response(res.body, {
+        const text = await res.text();
+        logger.error(`PUT user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
@@ -73,10 +96,17 @@ export async function DELETE(request) {
     const res = await fetch(userUrl, {
         method: "DELETE",
         headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
+    }).catch(err => {
+        logger.error(`DELETE user fetch feilet '${err}'`);
+        return new Response("Fetch feilet", {
+            status: 500
+        })
     });
 
     if (!res.ok) {
-        return new Response(res.body, {
+        const text = await res.text();
+        logger.error(`DELETE user feilet status: ${res.status} text: ${text}`);
+        return new Response("En feil skjedde", {
             status: res.status
         })
     }
