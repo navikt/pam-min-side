@@ -21,9 +21,11 @@ export async function GET(request) {
     });
 
     if (!res.ok) {
-        const text = await res.text();
-        logger.error(`GET user feilet status: ${res.status} text: ${text}`);
-        return new Response("En feil skjedde", {
+        if (res.status !== 404) {
+            const text = await res.text();
+            logger.error(`GET user feilet status: ${res.status} text: ${text}`);
+        }
+        return new Response(res.body, {
             status: res.status
         })
     }
