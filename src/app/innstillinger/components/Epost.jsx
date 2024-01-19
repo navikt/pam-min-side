@@ -270,7 +270,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                 <Heading level="5" size="xsmall" align="left" className="mb-2">
                                     E-postadressen din er ikke bekreftet
                                 </Heading>
-                                <BodyLong className="mb-3">
+                                <BodyLong>
                                     Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke finner
                                     bekreftelsen kan du sende en ny.
                                 </BodyLong>
