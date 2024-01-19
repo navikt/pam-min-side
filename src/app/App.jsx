@@ -11,21 +11,18 @@ function App({ children }) {
         <AuthenticationProvider>
             <PersonaliaProvider>
                 <div id="app">
-                    <SkipLink href="#main-content"/>
+                    <SkipLink href="#main-content" />
                     <div className="arb-push-footer-down">
-                        <MinSideHeader/>
+                        <MinSideHeader />
                         <main id="main-content">
-                            <SkulInnholdHvisIkkeTilgang>
-                                {children}
-                            </SkulInnholdHvisIkkeTilgang>
+                            <SkulInnholdHvisIkkeTilgang>{children}</SkulInnholdHvisIkkeTilgang>
                         </main>
                     </div>
-                    <Footer/>
+                    <Footer />
                 </div>
             </PersonaliaProvider>
         </AuthenticationProvider>
     );
 }
-
 
 export default App;

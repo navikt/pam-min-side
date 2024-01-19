@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import "@navikt/ds-css/dist/global/tokens.css";
 import "@navikt/ds-css/dist/global/reset.css";
 import "@navikt/ds-css/dist/global/baseline.css";
@@ -8,10 +7,13 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "./globals.css";
 import App from "./App";
-import {ensureUserLoggedIn} from "@/app/(common)/utils/ensureUserLoggedIn";
+import { ensureUserLoggedIn } from "@/app/(common)/utils/ensureUserLoggedIn";
+import interLocalFont from "next/font/local";
 
-const inter = Inter({
-    subsets: ["latin"],
+const myFont = interLocalFont({
+    src: "../../public/fonts/InterVariable.ttf",
+    weight: "100 900",
+    display: "swap",
 });
 
 export const metadata = {
@@ -27,7 +29,7 @@ export default async function RootLayout({ children }) {
 
     return (
         <html lang="nb">
-            <body data-theme="arbeidsplassen" className={inter.className}>
+            <body data-theme="arbeidsplassen" className={myFont.className}>
                 <App>{children}</App>
             </body>
         </html>
