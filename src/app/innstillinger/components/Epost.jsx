@@ -240,7 +240,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </HStack>
                             {verifiseringspostSendt && showVerifiseringspostAlertModal && (
                                 <>
-                                    <Alert variant="info" closeButton onClose={() => setShowVerifiseringspostAlertModal(false)}>
+                                    <Alert role="status" variant="info" closeButton onClose={() => setShowVerifiseringspostAlertModal(false)}>
                                         En ny verifiseringsmail er sendt til {lagretEpost}
                                     </Alert>
                                 </>
@@ -277,7 +277,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </Alert>
                             {verifiseringspostSendt && showVerifiseringspostAlert && (
                                 <>
-                                    <Alert variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
+                                    <Alert role="status" variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
                                         En ny verifiseringsmail er sendt til {lagretEpost}
                                     </Alert>
                                 </>
