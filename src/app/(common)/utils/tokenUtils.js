@@ -1,7 +1,7 @@
-import {Issuer} from "openid-client";
+import { Issuer } from "openid-client";
 import logger from "@/app/(common)/utils/logger";
-import {createRemoteJWKSet, jwtVerify} from "jose";
-import { uuidv4 } from "uuid";
+import { createRemoteJWKSet, jwtVerify } from "jose";
+import { v4 as uuidv4 } from "uuid";
 
 let issuer;
 let idPortenIssuer;
