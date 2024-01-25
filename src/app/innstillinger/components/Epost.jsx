@@ -240,7 +240,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </HStack>
                             {verifiseringspostSendt && showVerifiseringspostAlertModal && (
                                 <>
-                                    <Alert variant="info" closeButton onClose={() => setShowVerifiseringspostAlertModal(false)}>
+                                    <Alert role="status" variant="info" closeButton onClose={() => setShowVerifiseringspostAlertModal(false)}>
                                         En ny verifiseringsmail er sendt til {lagretEpost}
                                     </Alert>
                                 </>
@@ -270,14 +270,14 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                 <Heading level="5" size="xsmall" align="left" className="mb-2">
                                     E-postadressen din er ikke bekreftet
                                 </Heading>
-                                <BodyLong className="mb-3">
+                                <BodyLong>
                                     Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke finner
                                     bekreftelsen kan du sende en ny.
                                 </BodyLong>
                             </Alert>
                             {verifiseringspostSendt && showVerifiseringspostAlert && (
                                 <>
-                                    <Alert variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
+                                    <Alert role="status" variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
                                         En ny verifiseringsmail er sendt til {lagretEpost}
                                     </Alert>
                                 </>

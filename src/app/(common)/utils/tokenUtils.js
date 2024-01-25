@@ -1,6 +1,7 @@
-import {Issuer} from "openid-client";
+import { Issuer } from "openid-client";
 import logger from "@/app/(common)/utils/logger";
-import {createRemoteJWKSet, jwtVerify} from "jose";
+import { createRemoteJWKSet, jwtVerify } from "jose";
+import { v4 as uuidv4 } from "uuid";
 
 let issuer;
 let idPortenIssuer;
@@ -135,8 +136,11 @@ export async function exchangeToken(request) {
 
 export function createAuthorizationAndContentTypeHeaders(token, csrf) {
     const requestHeaders= new Headers()
+
+    const callId = uuidv4();
     requestHeaders.set('authorization', `Bearer ${token}`);
     requestHeaders.set('content-type', 'application/json');
+    requestHeaders.set('nav-callid', `${callId}`);
     if (csrf) {
         requestHeaders.set('cookie', `${CSRF_COOKIE_NAME}=${csrf}`)
         requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);

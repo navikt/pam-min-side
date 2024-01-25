@@ -1,6 +1,7 @@
-import {exchangeToken} from "@/app/(common)/utils/tokenUtils";
+import { exchangeToken } from "@/app/(common)/utils/tokenUtils";
 import { ADUSER_URL } from "@/app/(common)/utils/constants";
 import logger from "@/app/(common)/utils/logger";
+import { v4 as uuidv4 } from "uuid";
 
 export async function GET(request) {
     logger.info("GET personalia");
@@ -13,9 +14,11 @@ export async function GET(request) {
         })
     }
 
+    const callId = uuidv4();
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('authorization', `Bearer ${token}`);
     requestHeaders.set('content-type', 'application/json');
+    requestHeaders.set('nav-callid', `${callId}`);
 
     let aduserUrl = `${ADUSER_URL}/aduser/api/v1/personalia`
 
