@@ -242,7 +242,7 @@ export default function LagredeSokOgFavoritter({ harSamtykket, epost, setEpost, 
                 </Modal>
             </HStack>
             { harSamtykket && slettSamtykkePanel && (
-                <Box padding="6" background="surface-alt-2-subtle" borderRadius="large" className="mb-4">
+                <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
                     <Heading level="5" size="xsmall" align="left" className="mb-2">
                         Bekreft at du ønsker å slette samtykket for lagrede søk og favoritter
                     </Heading>
