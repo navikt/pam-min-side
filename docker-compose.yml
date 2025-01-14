@@ -1,61 +1,59 @@
-version: '3.8'
+networks:
+  default:
+    name: pam-shared-network
+    external: true
+
 services:
-  redis:
-    image: redis:7
+  pam-aduser:
+    platform: linux/amd64
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.291.135500
+    restart: unless-stopped
     ports:
-      - "6379:6379"
-  mock-oauth2-server:
-    image: ghcr.io/navikt/mock-oauth2-server:2.0.0
-    hostname: host.docker.internal
-    ports:
-      - "8233:8233"
-    environment:
-      SERVER_PORT: 8233
-      JSON_CONFIG: '{
-          "interactiveLogin": false,
-          "httpServer": "NettyWrapper",
-          "tokenCallbacks": [
-            {
-              "issuerId": "idporten",
-              "tokenExpiry": 900,
-              "requestMappings": [
-                {
-                  "requestParam": "grant_type",
-                  "claims": {
-                    "sub": "04010100653",
-                    "pid": "04010100653",
-                    "aud": [
-                              "local-token-x-client-id"
-                          ]
-                  }
-                }
-              ]
-            }
-          ]
-        }'
-  wonderwall:
+      - "9017:9017"
     extra_hosts:
-      - host.docker.internal:host-gateway
+      - "docker.host:host-gateway"
+    environment:
+      - spring_profiles_active=dev
+      - NO_NAV_PAM_ADUSER_ADURL=http://docker.host:3000/stillinger/stilling
+      - NO_NAV_PAM_ADUSER_URLTOSEARCHPAGE=http://docker.host:3000/stillinger/
+      - NO_NAV_PAM_ADUSER_ALLOWED_ORIGINS=http://localhost:3000
+      - NO_NAV_PAM_ADUSER_SEARCHURL=http://docker.host:3000/stillinger/api/search
+      - NAV_TRUSTSTORE_PATH=/nav_truststore.jts
+      - NAV_TRUSTSTORE_PASSWORD=changeit
+      - PAMADUSER_ARBEIDSPLASSEN_COOKIE_DOMAIN=localhost
+      - PAMADUSER_ARBEIDSPLASSEN_COOKIE_SECURE=false
+      - TOKEN_X_WELL_KNOWN_URL=http://host.docker.internal:8237/tokenx/.well-known/openid-configuration
+      - TOKEN_X_CLIENT_ID=local-token-x-client-id
+      - TOKEN_X_PRIVATE_JWK={"kty":"RSA","kid":"dummy","use":"sig","n":"dummy","e":"dummy","d":"dummy","p":"dummy","q":"dummy","dp":"dummy","dq":"dummy","qi":"dummy"}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=pam-aduser
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+    user: root
+    volumes:
+      - /secure-logs/
+
+  wonderwall:
     image: ghcr.io/nais/wonderwall:latest
     # alternatively,
     # build: .
     ports:
       - "3000:3000"
+    extra_hosts:
+      - "docker.host:host-gateway"
     command: >
-      --upstream-host=host.docker.internal:3001
+      --upstream-host=docker.host:3001
       --log-level=info
       --bind-address=0.0.0.0:3000
       --ingress=http://localhost:3000/min-side
-      --openid.well-known-url=http://host.docker.internal:8233/idporten/.well-known/openid-configuration
-      --openid.client-id=local-token-x-client-id
+      --openid.well-known-url=http://host.docker.internal:8237/idporten/.well-known/openid-configuration
+      --openid.client-id=local-idporten-client-id
       --openid.post-logout-redirect-uri=http://localhost:3000/
       --redis.address=redis:6379
       --redis.tls=false
       --log-format=text
     restart: on-failure
-    depends_on:
-      - mock-oauth2-server
-      - redis
     environment:
       WONDERWALL_OPENID_CLIENT_JWK: >
         {
