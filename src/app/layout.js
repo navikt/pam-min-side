@@ -15,6 +15,7 @@ const myFont = interLocalFont({
     src: "../../public/fonts/InterVariable.ttf",
     weight: "100 900",
     display: "swap",
+    //TODO: remove preload and adjustFontFallback when upgrading Next.js, as the "size-adjust" meta tag is fixed there.
     preload: true,
     adjustFontFallback: false,
 });
