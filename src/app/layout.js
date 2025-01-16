@@ -15,6 +15,8 @@ const myFont = interLocalFont({
     src: "../../public/fonts/InterVariable.ttf",
     weight: "100 900",
     display: "swap",
+    preload: true,
+    adjustFontFallback: false,
 });
 
 export const metadata = {
