@@ -151,7 +151,7 @@ export default function LagredeSokOgFavoritter({
                 </Button>
                 <Modal
                     open={visSamtykketekst}
-                    aria-label="Tilbakemelding"
+                    aria-label="Samtykke for lagrede søk og favoritter"
                     onClose={() => setVisSamtykketekst(false)}
                     width="medium"
                     closeOnBackdropClick
@@ -170,7 +170,12 @@ export default function LagredeSokOgFavoritter({
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                <Modal open={samtykkeModal} aria-label="Tilbakemelding" onClose={onCloseSamtykkeModal} width="medium">
+                <Modal
+                    open={samtykkeModal}
+                    aria-label="Ta i bruk lagrede søk og favoritter"
+                    onClose={onCloseSamtykkeModal}
+                    width="medium"
+                >
                     <Modal.Header closeButton={true}>
                         <Heading level="2" size="large">
                             Ta i bruk lagrede søk og favoritter

@@ -235,7 +235,7 @@ export default function Epost({
                     )}
                     <Modal
                         open={isEpostBekreftModalOpen}
-                        aria-label="Tilbakemelding"
+                        aria-label="Sjekk e-posten din for å bekrefte adressen"
                         onClose={() => onEpostBekreftCloseClick()}
                         width="medium"
                         closeOnBackdropClick
