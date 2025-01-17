@@ -1,13 +1,26 @@
 "use client";
 
-import {Alert, BodyLong, Box, Button, Heading, HStack, Link, Modal, TextField, VStack} from "@navikt/ds-react";
-import {PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon} from "@navikt/aksel-icons";
-import {useState} from "react";
+import { Alert, BodyLong, Box, Button, Heading, HStack, Link, Modal, TextField, VStack } from "@navikt/ds-react";
+import { PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon } from "@navikt/aksel-icons";
+import { useState } from "react";
 import ValidateEmail from "@/app/(common)/components/ValidateEmail";
-import {FigureWithEnvelope} from "@navikt/arbeidsplassen-react";
+import { FigureWithEnvelope } from "@navikt/arbeidsplassen-react";
 
-export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, navn, uuid, lagretEpost, setLagretEpost, harVerifisertEpost, setVerifisertEpost, slettEpostPanel, setSlettEpostPanel, fetchSamtykke }) {
-
+export default function Epost({
+    harSamtykket,
+    setHarSamtykket,
+    epost,
+    setEpost,
+    navn,
+    uuid,
+    lagretEpost,
+    setLagretEpost,
+    harVerifisertEpost,
+    setVerifisertEpost,
+    slettEpostPanel,
+    setSlettEpostPanel,
+    fetchSamtykke,
+}) {
     const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
     const [isEpostError, setIsEpostError] = useState(false);
     const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
@@ -16,19 +29,19 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
     const [isEpostBekreftModalOpen, setIsEpostBekreftModalOpen] = useState(false);
     const [showVerifiseringspostAlertModal, setShowVerifiseringspostAlertModal] = useState(false);
 
-    async function lagreEpost(){
+    async function lagreEpost() {
         if (!epost || !ValidateEmail(epost)) {
             setIsEpostError(true);
         } else {
             const response = await fetch("/min-side/api/aduser/api/v1/user", {
                 method: "PUT",
                 body: JSON.stringify({
-                    "email": epost,
-                    "name": navn,
-                    "acceptedTerms": "true",
-                    "uuid": uuid
-                })
-            })
+                    email: epost,
+                    name: navn,
+                    acceptedTerms: "true",
+                    uuid: uuid,
+                }),
+            });
             if (response.status === 200) {
                 setIsLagreEpostPanel(false);
                 setHarSamtykket(true);
@@ -47,7 +60,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
     }
 
     function avbrytLagre() {
-        setIsLagreEpostPanel(false)
+        setIsLagreEpostPanel(false);
         setEpost(lagretEpost);
         setIsEpostError(false);
         setRequestFeilet(false);
@@ -57,12 +70,12 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
         const response = await fetch("/min-side/api/aduser/api/v1/user", {
             method: "PUT",
             body: JSON.stringify({
-                "email": epost,
-                "name": navn,
-                "acceptedTerms": "true",
-                "uuid": uuid
-            })
-        })
+                email: epost,
+                name: navn,
+                acceptedTerms: "true",
+                uuid: uuid,
+            }),
+        });
         if (response.status === 200) {
             setHarSamtykket(true);
             setIsEpostError(false);
@@ -79,8 +92,8 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
 
     async function sendNyBekreftelse() {
         const response = await fetch("/min-side/api/aduser/api/v1/resendverificationemail", {
-            method: "PUT"
-        })
+            method: "PUT",
+        });
         if (response.status === 200) {
             setVerifiseringspostSendt(true);
             if (isEpostBekreftModalOpen) {
@@ -103,7 +116,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
 
     return (
         <>
-            { harSamtykket && (
+            {harSamtykket && (
                 <>
                     <div className="mb-4"></div>
                     <Heading level="3" size="medium" align="left" className="mb-4">
@@ -115,7 +128,9 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                     <BodyLong className="mb-6">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
-                        <Link href={`/stillinger/lagrede-sok`} inlineText>dine lagrede søk.</Link>
+                        <Link href={`/stillinger/lagrede-sok`} inlineText>
+                            dine lagrede søk.
+                        </Link>
                     </BodyLong>
                     {!epost && !isLagreEpostPanel && (
                         <HStack>
@@ -143,7 +158,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         />
                     )}
                     <HStack gap="2" align="start" className="mb-4">
-                        {(isLagreEpostPanel) && (
+                        {isLagreEpostPanel && (
                             <>
                                 <Button
                                     size="small"
@@ -164,7 +179,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                 </Button>
                             </>
                         )}
-                        {epost && lagretEpost && !isLagreEpostPanel &&(
+                        {epost && lagretEpost && !isLagreEpostPanel && (
                             <Button
                                 size="small"
                                 variant="tertiary"
@@ -188,7 +203,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                             </Button>
                         )}
                     </HStack>
-                    { slettEpostPanel && (
+                    {slettEpostPanel && (
                         <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
                             <Heading level="5" size="xsmall" align="left" className="mb-2">
                                 Bekreft at du ønsker å slette e-postadressen din
@@ -210,7 +225,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                         size="small"
                                         variant="primary"
                                         id="ja-slett-epost"
-                                        onClick={() => slettEpost(null, navn, uuid) }
+                                        onClick={() => slettEpost(null, navn, uuid)}
                                     >
                                         Ja, slett e-postadresse
                                     </Button>
@@ -220,7 +235,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                     )}
                     <Modal
                         open={isEpostBekreftModalOpen}
-                        aria-label="Tilbakemelding"
+                        aria-label="Sjekk e-posten din for å bekrefte adressen"
                         onClose={() => onEpostBekreftCloseClick()}
                         width="medium"
                         closeOnBackdropClick
@@ -232,26 +247,27 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                         </Modal.Header>
                         <Modal.Body>
                             <BodyLong className="mb-6">
-                                Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke har
-                                fått en e-post innen et par minutter så kan du prøve å sende en ny.
+                                Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke
+                                har fått en e-post innen et par minutter så kan du prøve å sende en ny.
                             </BodyLong>
                             <HStack justify="center" className={showVerifiseringspostAlertModal ? "mb-6" : ""}>
                                 <FigureWithEnvelope />
                             </HStack>
                             {verifiseringspostSendt && showVerifiseringspostAlertModal && (
                                 <>
-                                    <Alert role="status" variant="info" closeButton onClose={() => setShowVerifiseringspostAlertModal(false)}>
+                                    <Alert
+                                        role="status"
+                                        variant="info"
+                                        closeButton
+                                        onClose={() => setShowVerifiseringspostAlertModal(false)}
+                                    >
                                         En ny verifiseringsmail er sendt til {lagretEpost}
                                     </Alert>
                                 </>
                             )}
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button
-                                variant="secondary"
-                                id="lukk-modal"
-                                onClick={() => onEpostBekreftCloseClick()}
-                            >
+                            <Button variant="secondary" id="lukk-modal" onClick={() => onEpostBekreftCloseClick()}>
                                 Lukk
                             </Button>
                             <Button
@@ -271,13 +287,19 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     E-postadressen din er ikke bekreftet
                                 </Heading>
                                 <BodyLong>
-                                    Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du ikke finner
-                                    bekreftelsen kan du sende en ny.
+                                    Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du
+                                    ikke finner bekreftelsen kan du sende en ny.
                                 </BodyLong>
                             </Alert>
                             {verifiseringspostSendt && showVerifiseringspostAlert && (
                                 <>
-                                    <Alert role="status" variant="info" className="mb-4" closeButton onClose={() => setShowVerifiseringspostAlert(false)}>
+                                    <Alert
+                                        role="status"
+                                        variant="info"
+                                        className="mb-4"
+                                        closeButton
+                                        onClose={() => setShowVerifiseringspostAlert(false)}
+                                    >
                                         En ny verifiseringsmail er sendt til {lagretEpost}
                                     </Alert>
                                 </>
@@ -287,7 +309,7 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                                     size="small"
                                     variant="tertiary"
                                     id="send-ny-bekreftelse-epost"
-                                    onClick={() => sendNyBekreftelse() }
+                                    onClick={() => sendNyBekreftelse()}
                                     icon={<EnvelopeClosedIcon aria-hidden="true" fontSize="1.25rem" />}
                                 >
                                     Send ny bekreftelse på e-post
@@ -302,11 +324,9 @@ export default function Epost({ harSamtykket, setHarSamtykket, epost, setEpost, 
                     <Heading level="5" size="xsmall" align="left" className="mb-2">
                         Kunne ikke lagre epost / sende ut ny bekreftelse
                     </Heading>
-                    <BodyLong className="mb-3">
-                        Vennligst prøv igjen senere.
-                    </BodyLong>
+                    <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>
                 </Alert>
             )}
         </>
-    )
+    );
 }
