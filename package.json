@@ -12,9 +12,9 @@
     "dependencies": {
         "@amplitude/analytics-browser": "^2.3.6",
         "@navikt/aksel-icons": "^5.7.6",
-        "@navikt/arbeidsplassen-css": "^8.2.17",
-        "@navikt/arbeidsplassen-react": "^8.3.9",
-        "@navikt/arbeidsplassen-theme": "^6.0.2",
+        "@navikt/arbeidsplassen-css": "^8.4.0",
+        "@navikt/arbeidsplassen-react": "^8.4.0",
+        "@navikt/arbeidsplassen-theme": "^6.1.0",
         "@navikt/ds-css": "^7.9.0",
         "@navikt/ds-react": "^7.9.0",
         "jose": "^5.9.6",
