@@ -5,6 +5,7 @@ import AuthenticationProvider from "@/app/(common)/contexts/AuthenticationProvid
 import MinSideHeader from "@/app/(common)/components/MinSideHeader";
 import PersonaliaProvider from "@/app/(common)/components/context/PersonaliaContext";
 import SkulInnholdHvisIkkeTilgang from "@/app/(common)/components/tilgang/SkjulInnholdHvisIkkeTilgang";
+import Umami from "@/app/(common)/components/tracking/Umami";
 
 function App({ children }) {
     return (
@@ -19,6 +20,7 @@ function App({ children }) {
                         </main>
                     </div>
                     <Footer />
+                    <Umami />
                 </div>
             </PersonaliaProvider>
         </AuthenticationProvider>
