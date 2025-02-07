@@ -3,7 +3,7 @@
 const ContentSecurityPolicy = `
   default-src 'self';
   img-src 'self' data: arbeidsplassen.nav.no;
-  script-src 'self' 'unsafe-eval' nav.no;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' nav.no;
   worker-src 'self' blob:;
   style-src 'self' 'unsafe-inline' nav.no;
   font-src 'self' nav.no;
