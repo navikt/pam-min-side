@@ -7,6 +7,7 @@ export default function Umami() {
     const [isDev, setIsDev] = useState(false);
 
     useEffect(() => {
+        console.log(" - ", window?.location?.hostname);
         if (window?.location?.hostname === "arbeidsplassen.intern.dev.nav.no") {
             setIsDev(true);
         }
