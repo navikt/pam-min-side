@@ -2,16 +2,11 @@ import React, { useState } from "react";
 import { BodyLong, Heading, HStack, Link, Panel, VStack } from "@navikt/ds-react";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import { FaceFrownIcon, FaceIcon, FaceSmileIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "@/app/(common)/components/tracking/amplitudeTracker";
 
 function Feedback() {
     const [hasAnswered, setHasAnswered] = useState(false);
 
-    const trackAnswer = (answer) => {
-        logAmplitudeEvent("Answered survey", {
-            i_hvilken_grad_opplever_du_at_vare_tjenester_hjelper_deg_som_jobbsoker: answer,
-            surveyId: "sporreundersokelse-min-side",
-        });
+    const trackAnswer = () => {
         setHasAnswered(true);
     };
 

@@ -1,61 +1,59 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: pam-min-side
-  namespace: teampam
-  labels:
-    team: teampam
+    name: pam-min-side
+    namespace: teampam
+    labels:
+        team: teampam
 spec:
-  image: {{ image }}
-  port: 8085
-  liveness:
-    path: /min-side/api/isAlive
-    initialDelay: 10
-  readiness:
-    path: /min-side/api/isReady
-    initialDelay: 10
-  replicas:
-    min: 2
-    max: 2
-    cpuThresholdPercentage: 50
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 200m
-      memory: 256Mi
-  vault:
-    enabled: false
-  idporten:
-    enabled: true
-    sidecar:
-      enabled: true
-      level: Level3
-  tokenx:
-    enabled: true
-  prometheus:
-    enabled: true
-    path: /metrics
-  observability:
-    logging:
-      destinations:
-        - id: loki
-        - id: elastic
-  ingresses:
-    - {{ ingress }}
-  env:
-    - name: PORT
-      value: "8085"
-    - name: PAM_ADUSER_URL
-      value: {{ pam_aduser_url }}
-    - name: PAM_ADUSER_AUDIENCE
-      value: {{ pam_aduser_audience }}
-    - name: NEXT_PUBLIC_ARBEIDSPLASSEN_URL
-      value: {{ arbeidsplassen_url }}
-    - name: NEXT_PUBLIC_AMPLITUDE_TOKEN
-      value: {{ amplitude_token }}
-  accessPolicy:
-    outbound:
-      rules:
-        - application: pam-aduser
+    image: { { image } }
+    port: 8085
+    liveness:
+        path: /min-side/api/isAlive
+        initialDelay: 10
+    readiness:
+        path: /min-side/api/isReady
+        initialDelay: 10
+    replicas:
+        min: 2
+        max: 2
+        cpuThresholdPercentage: 50
+    resources:
+        limits:
+            cpu: 500m
+            memory: 512Mi
+        requests:
+            cpu: 200m
+            memory: 256Mi
+    vault:
+        enabled: false
+    idporten:
+        enabled: true
+        sidecar:
+            enabled: true
+            level: Level3
+    tokenx:
+        enabled: true
+    prometheus:
+        enabled: true
+        path: /metrics
+    observability:
+        logging:
+            destinations:
+                - id: loki
+                - id: elastic
+    ingresses:
+        - { { ingress } }
+    env:
+        - name: PORT
+          value: "8085"
+        - name: PAM_ADUSER_URL
+          value: { { pam_aduser_url } }
+        - name: PAM_ADUSER_AUDIENCE
+          value: { { pam_aduser_audience } }
+        - name: NEXT_PUBLIC_ARBEIDSPLASSEN_URL
+          value: { { arbeidsplassen_url } }
+    accessPolicy:
+        outbound:
+            rules:
+                - application: pam-aduser

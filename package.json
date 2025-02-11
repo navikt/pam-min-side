@@ -10,7 +10,6 @@
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|md|css)\""
     },
     "dependencies": {
-        "@amplitude/analytics-browser": "^2.3.6",
         "@navikt/aksel-icons": "^7.11.0",
         "@navikt/arbeidsplassen-css": "^8.4.0",
         "@navikt/arbeidsplassen-react": "^8.4.0",
