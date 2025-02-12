@@ -8,7 +8,7 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline' nav.no;
   font-src 'self' nav.no;
   frame-src 'self' video.qbrick.com;
-  connect-src 'self' amplitude.nav.no umami.nav.no;
+  connect-src 'self' umami.nav.no;
 `;
 
 const securityHeaders = [
