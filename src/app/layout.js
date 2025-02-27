@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import "@navikt/ds-css/dist/global/tokens.css";
 import "@navikt/ds-css/dist/global/reset.css";
 import "@navikt/ds-css/dist/global/baseline.css";
@@ -29,12 +30,19 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+    const cookieStore = cookies();
+    const cookiesValue = cookieStore
+        .getAll()
+        .map((c) => `${c.name}=${c.value}`)
+        .join("; ");
+    const userCookieActionTaken = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
+
     await ensureUserLoggedIn();
 
     return (
         <html lang="nb">
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <App>{children}</App>
+                <App userCookieActionTaken={userCookieActionTaken}>{children}</App>
             </body>
         </html>
     );
