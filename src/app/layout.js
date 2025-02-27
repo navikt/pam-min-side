@@ -10,7 +10,7 @@ import "./globals.css";
 import App from "./App";
 import { ensureUserLoggedIn } from "@/app/(common)/utils/ensureUserLoggedIn";
 import interLocalFont from "next/font/local";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { CookieBanner, CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 const myFont = interLocalFont({
     variable: "--font-inter",
