@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
+import { CookieBanner, Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import AuthenticationProvider from "@/app/(common)/contexts/AuthenticationProvider";
 import MinSideHeader from "@/app/(common)/components/MinSideHeader";
 import PersonaliaProvider from "@/app/(common)/components/context/PersonaliaContext";
