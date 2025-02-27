@@ -17,7 +17,7 @@ function App({ userCookieActionTaken, children }) {
                     {!localUserCookieActionTaken && (
                         <CookieBanner
                             onClose={() => {
-                                setLocalHasUserTakenCookieAction(true);
+                                setLocalUserCookieActionTaken(true);
                             }}
                         />
                     )}
