@@ -1,71 +1,71 @@
 networks:
-  default:
-    name: pam-shared-network
-    external: true
+    default:
+        name: pam-shared-network
+        external: true
 
 services:
-  pam-aduser:
-    platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.291.135500
-    restart: unless-stopped
-    ports:
-      - "9017:9017"
-    extra_hosts:
-      - "docker.host:host-gateway"
-    environment:
-      - spring_profiles_active=dev
-      - NO_NAV_PAM_ADUSER_ADURL=http://docker.host:3000/stillinger/stilling
-      - NO_NAV_PAM_ADUSER_URLTOSEARCHPAGE=http://docker.host:3000/stillinger/
-      - NO_NAV_PAM_ADUSER_ALLOWED_ORIGINS=http://localhost:3000
-      - NO_NAV_PAM_ADUSER_SEARCHURL=http://docker.host:3000/stillinger/api/search
-      - NAV_TRUSTSTORE_PATH=/nav_truststore.jts
-      - NAV_TRUSTSTORE_PASSWORD=changeit
-      - PAMADUSER_ARBEIDSPLASSEN_COOKIE_DOMAIN=localhost
-      - PAMADUSER_ARBEIDSPLASSEN_COOKIE_SECURE=false
-      - TOKEN_X_WELL_KNOWN_URL=http://host.docker.internal:8237/tokenx/.well-known/openid-configuration
-      - TOKEN_X_CLIENT_ID=local-token-x-client-id
-      - TOKEN_X_PRIVATE_JWK={"kty":"RSA","kid":"dummy","use":"sig","n":"dummy","e":"dummy","d":"dummy","p":"dummy","q":"dummy","dp":"dummy","dq":"dummy","qi":"dummy"}
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_DATABASE=pam-aduser
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=password
-    user: root
-    volumes:
-      - /secure-logs/
+    pam-aduser:
+        platform: linux/amd64
+        image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.310.120237
+        restart: unless-stopped
+        ports:
+            - "9017:9017"
+        extra_hosts:
+            - "docker.host:host-gateway"
+        environment:
+            - spring_profiles_active=dev
+            - NO_NAV_PAM_ADUSER_ADURL=http://docker.host:3000/stillinger/stilling
+            - NO_NAV_PAM_ADUSER_URLTOSEARCHPAGE=http://docker.host:3000/stillinger/
+            - NO_NAV_PAM_ADUSER_ALLOWED_ORIGINS=http://localhost:3000
+            - NO_NAV_PAM_ADUSER_SEARCHURL=http://docker.host:3000/stillinger/api/search
+            - NAV_TRUSTSTORE_PATH=/nav_truststore.jts
+            - NAV_TRUSTSTORE_PASSWORD=changeit
+            - PAMADUSER_ARBEIDSPLASSEN_COOKIE_DOMAIN=localhost
+            - PAMADUSER_ARBEIDSPLASSEN_COOKIE_SECURE=false
+            - TOKEN_X_WELL_KNOWN_URL=http://host.docker.internal:8237/tokenx/.well-known/openid-configuration
+            - TOKEN_X_CLIENT_ID=local-token-x-client-id
+            - TOKEN_X_PRIVATE_JWK={"kty":"RSA","kid":"dummy","use":"sig","n":"dummy","e":"dummy","d":"dummy","p":"dummy","q":"dummy","dp":"dummy","dq":"dummy","qi":"dummy"}
+            - DB_HOST=postgres
+            - DB_PORT=5432
+            - DB_DATABASE=pam-aduser
+            - DB_USERNAME=postgres
+            - DB_PASSWORD=password
+        user: root
+        volumes:
+            - /secure-logs/
 
-  wonderwall:
-    image: ghcr.io/nais/wonderwall:latest
-    # alternatively,
-    # build: .
-    ports:
-      - "3000:3000"
-    extra_hosts:
-      - "docker.host:host-gateway"
-    command: >
-      --upstream-host=docker.host:3001
-      --log-level=info
-      --bind-address=0.0.0.0:3000
-      --ingress=http://localhost:3000/min-side
-      --openid.well-known-url=http://host.docker.internal:8237/idporten/.well-known/openid-configuration
-      --openid.client-id=local-idporten-client-id
-      --openid.post-logout-redirect-uri=http://localhost:3000/
-      --redis.address=redis:6379
-      --redis.tls=false
-      --log-format=text
-    restart: on-failure
-    environment:
-      WONDERWALL_OPENID_CLIENT_JWK: >
-        {
-          "kty":"RSA",
-          "alg":"RS256",
-          "use":"sig",
-          "p":"_xCPvqs85ZZVg460Qfot26rQoNRPTOVDo5p4nqH3ep6BK_5TvoU5LFXd26W-1V1Lc5fcvvftClPOT201xgat4DVtliNtoc8od_tWr190A3AzbsAVFOx0nKa5uhLBxP9SsPM84llp6PXF6QTMGFiPYuoLDaQQqL1K4BbHq3ZzF2M",
-          "q":"7QLqW75zkfSDrn5rMoF50WXyB_ysNx6-2SvaXKGXaOn80IR7QW5vwkleJnsdz_1kr04rJws2p4HBJjUFfSJDi1Dapj7tbIwb0a1szDs6Y2fAa3DlzgXZCkoE2TIrW6UITgs14pI_a7RasclE71FpoZ78XNBvj3NmZugkNLBvRjs",
-          "d":"f7aT4poed8uKdcSD95mvbfBdb6X-M86d99su0c390d6gWwYudeilDugH9PMwqUeUhY0tdaRVXr6rDDIKLSE-uEyaYKaramev0cG-J_QWYJU2Lx-4vDGNHAE7gC99o1Ee_LXqMDCBawMYyVcSWx7PxGQfzhSsARsAIbkarO1sg9zsqPS4exSMbK8wyCTPgRbnkB32_UdZSGbdSib1jSYyyoAItZ8oZHiltVsZIlA97kS4AGPtozde043NC7Ik0uEzgB5qJ_tR7vW8MfDrBj6da2NrLh0UH-q28dooBO1vEu0rvKZIescXYk9lk1ZakHhhpZaLykDOGzxCpronzP3_kQ",
-          "e":"AQAB",
-          "qi":"9kMIR6pEoiwN3M6O0n8bnh6c3KbLMoQQ1j8_Zyir7ZIlmRpWYl6HtK0VnD88zUuNKTrQa7-jfE5uAUa0PubzfRqybACb4S3HIAuSQP00_yCPzCSRrbpGRDFqq-8eWVwI9VdiN4oqkaaWcL1pd54IDcHIbfk-ZtNtZgsOlodeRMo",
-          "dp":"VUecSAvI2JpjDRFxg326R2_dQWi6-uLMsq67FY7hx8WnOqZWKaUxcHllLENGguAmkgd8bv1F6-YJXNUO3Z7uE8DJWyGNTkSNK1CFsy0fBOdGywi-A7jrZFT6VBRhZRRY-YDaInPyzUkfWsGX26wAhPnrqCvqxgBEQJhdOh7obDE",
-          "dq":"7EUfw92T8EhEjUrRKkQQYEK0iGnGdBxePLiOshEUky3PLT8kcBHbr17cUJgjHBiKqofOVNnE3i9nkOMCWcAyfUtY7KmGndL-WIP-FYplpnrjQzgEnuENgEhRlQOCXZWjNcnPKdKJDqF4WAtAgSIznz6SbSQMUoDD8IoyraPFCck",
-          "n":"7CU8tTANiN6W_fD9SP1dK2vQvCkf7-nwvBYe5CfANV0_Bb0ZmQb77FVVsl1beJ7EYLz3cJmL8Is1RCHKUK_4ydqihNjEWTyZiQoj1i67pkqk_zRvfQa9raZR4uZbuBxx7dWUoPC6fFH2F_psAlHW0zf90fsLvhB6Aqq3uvO7XXqo8qNl9d_JSG0Rg_2QUYVb0WKmPVbbhgwtkFu0Tyuev-VZ9IzTbbr5wmZwEUVY7YAi73pDJkcZt5r2WjOF_cuIXe-O2vwbOrRgmJfHO9--mVLdATnEyrb6q2oy_75h6JjP-R4-TD1hyoFFoE2gmj-kSS6Z_Gggljs3Aw7--Nh10Q"
-        }
+    wonderwall:
+        image: ghcr.io/nais/wonderwall:latest
+        # alternatively,
+        # build: .
+        ports:
+            - "3000:3000"
+        extra_hosts:
+            - "docker.host:host-gateway"
+        command: >
+            --upstream-host=docker.host:3001
+            --log-level=info
+            --bind-address=0.0.0.0:3000
+            --ingress=http://localhost:3000/min-side
+            --openid.well-known-url=http://host.docker.internal:8237/idporten/.well-known/openid-configuration
+            --openid.client-id=local-idporten-client-id
+            --openid.post-logout-redirect-uri=http://localhost:3000/
+            --redis.address=redis:6379
+            --redis.tls=false
+            --log-format=text
+        restart: on-failure
+        environment:
+            WONDERWALL_OPENID_CLIENT_JWK: >
+                {
+                  "kty":"RSA",
+                  "alg":"RS256",
+                  "use":"sig",
+                  "p":"_xCPvqs85ZZVg460Qfot26rQoNRPTOVDo5p4nqH3ep6BK_5TvoU5LFXd26W-1V1Lc5fcvvftClPOT201xgat4DVtliNtoc8od_tWr190A3AzbsAVFOx0nKa5uhLBxP9SsPM84llp6PXF6QTMGFiPYuoLDaQQqL1K4BbHq3ZzF2M",
+                  "q":"7QLqW75zkfSDrn5rMoF50WXyB_ysNx6-2SvaXKGXaOn80IR7QW5vwkleJnsdz_1kr04rJws2p4HBJjUFfSJDi1Dapj7tbIwb0a1szDs6Y2fAa3DlzgXZCkoE2TIrW6UITgs14pI_a7RasclE71FpoZ78XNBvj3NmZugkNLBvRjs",
+                  "d":"f7aT4poed8uKdcSD95mvbfBdb6X-M86d99su0c390d6gWwYudeilDugH9PMwqUeUhY0tdaRVXr6rDDIKLSE-uEyaYKaramev0cG-J_QWYJU2Lx-4vDGNHAE7gC99o1Ee_LXqMDCBawMYyVcSWx7PxGQfzhSsARsAIbkarO1sg9zsqPS4exSMbK8wyCTPgRbnkB32_UdZSGbdSib1jSYyyoAItZ8oZHiltVsZIlA97kS4AGPtozde043NC7Ik0uEzgB5qJ_tR7vW8MfDrBj6da2NrLh0UH-q28dooBO1vEu0rvKZIescXYk9lk1ZakHhhpZaLykDOGzxCpronzP3_kQ",
+                  "e":"AQAB",
+                  "qi":"9kMIR6pEoiwN3M6O0n8bnh6c3KbLMoQQ1j8_Zyir7ZIlmRpWYl6HtK0VnD88zUuNKTrQa7-jfE5uAUa0PubzfRqybACb4S3HIAuSQP00_yCPzCSRrbpGRDFqq-8eWVwI9VdiN4oqkaaWcL1pd54IDcHIbfk-ZtNtZgsOlodeRMo",
+                  "dp":"VUecSAvI2JpjDRFxg326R2_dQWi6-uLMsq67FY7hx8WnOqZWKaUxcHllLENGguAmkgd8bv1F6-YJXNUO3Z7uE8DJWyGNTkSNK1CFsy0fBOdGywi-A7jrZFT6VBRhZRRY-YDaInPyzUkfWsGX26wAhPnrqCvqxgBEQJhdOh7obDE",
+                  "dq":"7EUfw92T8EhEjUrRKkQQYEK0iGnGdBxePLiOshEUky3PLT8kcBHbr17cUJgjHBiKqofOVNnE3i9nkOMCWcAyfUtY7KmGndL-WIP-FYplpnrjQzgEnuENgEhRlQOCXZWjNcnPKdKJDqF4WAtAgSIznz6SbSQMUoDD8IoyraPFCck",
+                  "n":"7CU8tTANiN6W_fD9SP1dK2vQvCkf7-nwvBYe5CfANV0_Bb0ZmQb77FVVsl1beJ7EYLz3cJmL8Is1RCHKUK_4ydqihNjEWTyZiQoj1i67pkqk_zRvfQa9raZR4uZbuBxx7dWUoPC6fFH2F_psAlHW0zf90fsLvhB6Aqq3uvO7XXqo8qNl9d_JSG0Rg_2QUYVb0WKmPVbbhgwtkFu0Tyuev-VZ9IzTbbr5wmZwEUVY7YAi73pDJkcZt5r2WjOF_cuIXe-O2vwbOrRgmJfHO9--mVLdATnEyrb6q2oy_75h6JjP-R4-TD1hyoFFoE2gmj-kSS6Z_Gggljs3Aw7--Nh10Q"
+                }
