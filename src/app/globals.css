@@ -34,6 +34,53 @@ button {
     height: 100vh;
 }
 
+.flex {
+    display: flex;
+}
+
 .flex-1 {
     flex: 1;
+}
+
+.flex.align-normal > div {
+    align-self: normal;
+}
+
+.box-link {
+    text-decoration: none;
+    color: var(--a-text-default);
+}
+
+.box-link.navds-link:active {
+    background-color: unset;
+    box-shadow: none;
+    color: unset;
+    outline: none;
+}
+
+.box-link:hover h2 {
+    text-decoration: underline;
+}
+
+.box-link-image {
+    border-bottom-left-radius: 4rem;
+}
+
+@media (min-width: 768px) {
+    .box-link-image {
+        border-bottom-left-radius: 5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .box-link-image {
+        border-bottom-left-radius: 6rem;
+    }
+}
+
+@media (max-width: 1343px) {
+    .box-link-image {
+        width: 100%;
+        height: auto;
+    }
 }

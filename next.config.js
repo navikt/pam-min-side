@@ -23,7 +23,7 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
-    basePath: "/min-side",
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH || "/min-side",
     async headers() {
         return [
             {
