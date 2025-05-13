@@ -1,4 +1,4 @@
-ingress: "https://arbeidsplassen.nav.no/min-side"
+ingress: "https://arbeidsplassen.nav.no/min-side2"
 arbeidsplassen_url: "https://arbeidsplassen.nav.no"
 loglevel: "debug"
 namespace: "teampam"
